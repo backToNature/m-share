@@ -1,0 +1,25 @@
+{
+  "name": "m-share",
+  "version": "1.0.0",
+  "description": "h5分享",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "http-server ./",
+    "dev": "rollup src/index.js --watch --output.format umd --name \"Mshare\" --output.file dist/m-share.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/backToNature/m-share.git"
+  },
+  "author": "'guohao' <'backtonature@foxmail.com'>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/backToNature/m-share/issues"
+  },
+  "homepage": "https://github.com/backToNature/m-share#readme",
+  "devDependencies": {
+    "http-server": "^0.11.1",
+    "rollup": "^0.59.2"
+  }
+}
