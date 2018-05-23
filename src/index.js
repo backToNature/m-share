@@ -2,10 +2,11 @@
  * @Author: backToNature 
  * @Date: 2018-05-22 17:23:35 
  * @Last Modified by: daringuo
- * @Last Modified time: 2018-05-22 21:41:50
+ * @Last Modified time: 2018-05-23 21:19:02
  */
 import util from './util.js';
 import setWxShareInfo from './set-wx-share-info.js';
+const typesMap = ['wx', 'wxline', 'qq', 'qzone', 'sina'];
 
 export default {
   init(config) {
@@ -23,6 +24,7 @@ export default {
       link: _config.link,
       imgUrl: _config.imgUrl
     };
+
     // 如果有微信参数，则配置微信分享内容
     if (util.ua.isFromWx && _config.wx && _config.wx.appId && _config.wx.timestamp && _config.wx.nonceStr && _config.wx.signature) {
       setWxShareInfo(config.types, _config, info);
@@ -33,11 +35,48 @@ export default {
       setQQshareInfo(config.types, info);
     }
 
-  },
-  render() {
+    const domList = document.querySelectorAll('.m-share');
+    
+    // 初始化
+    domList.forEach(item => {
+      this.render(item, _config);
+    });
 
   },
-  to() {
-
+  // 渲染
+  render(dom, config) {
+    const _config = {
+      title: dom.getAttribute('data-title') || config.title,
+      desc: dom.getAttribute('data-desc') || config.desc,
+      link: dom.getAttribute('data-link') || config.link,
+      imgUrl: dom.getAttribute('data-imgUrl') || config.imgUrl,
+      types: (dom.getAttribute('data-types') && dom.getAttribute('data-types').split(',')) || config.types
+    };
+    const getTmpl = (type) => {
+      if (typesMap.indexOf(type) >= 0) {
+        return `<button class="m-share-${type}">${type}</button>`;
+      }
+      return '';
+    };
+    let tmp = '';
+    _config.types.forEach(item => {
+      tmp += getTmpl(item);
+    });
+    dom.innerHTML = tmp;
+    dom.addEventListener('click', (e) => {
+      typesMap.forEach(item => {
+        if (e.target.classList.has(`m-share-${item}`)) {
+          this.to(item);
+        }
+      });
+    });
+  },
+  // 执行分享逻辑
+  to(type) {
+    
+  },
+  // 弹出弹层进行分享
+  popup(config) {
+    
   }
 };

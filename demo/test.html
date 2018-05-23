@@ -13,28 +13,23 @@
     </style>
 </head>
 <body>
-    <div><button id="weixin">分享到微信</button></div>
-    <div><button id="wexinFriend">分享到朋友圈</button></div>
-    <div><button id="qzone">分享到qzone</button></div>
-    <div><button id="qq">分享到qq</button></div>
-    <div><button id="weibo">分享到微博</button></div>
+	<div class="m-share"></div>
     <script src="../dist/m-share.js"></script>
     <script>
-        document.querySelector('#weixin').addEventListener('click', () => {
-            window.QbShare.weixin();
-        });
-        document.querySelector('#wexinFriend').addEventListener('click', () => {
-            window.QbShare.wexinFriend();
-        });
-        document.querySelector('#qzone').addEventListener('click', () => {
-            window.QbShare.qzone();
-        });
-        document.querySelector('#qq').addEventListener('click', () => {
-            window.QbShare.wexinFriend();
-        });
-        document.querySelector('#weibo').addEventListener('click', () => {
-            window.QbShare.wexinFriend();
-        });
+        var config = {
+            title: '我就是标题', // 标题，默认读取document.title
+            desc: '这是一个描述', // 描述, 默认读取head标签：<meta name="description" content="desc" />
+            link: 'http://www.qq.com', // 网址，默认使用window.location.href
+            imgUrl: '//mat1.gtimg.com/www/qq2018/imgs/qq_logo_2018x2.png', // 图片, 默认取网页中第一个img标签
+            types: ['wx', 'wxline', 'qq', 'qzone', 'sina'], // 开启的分享图标, 默认为全部
+            wx: { // 如果需要配置微信客户端分享的内容，需要填入如下参数
+                appId: '', // 公众号的唯一标识
+                timestamp: '', // 生成签名的时间戳
+                nonceStr: '', // 生成签名的随机串
+                signature: '', // 签名
+            }
+        };
+        Mshare.init(config);
     </script>
 </body>
 </html>
