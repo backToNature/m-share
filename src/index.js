@@ -2,10 +2,25 @@
  * @Author: backToNature 
  * @Date: 2018-05-22 17:23:35 
  * @Last Modified by: daringuo
- * @Last Modified time: 2018-05-23 21:19:02
+ * @Last Modified time: 2018-05-24 14:34:28
  */
 import util from './util.js';
 import setWxShareInfo from './set-wx-share-info.js';
+import setQQshareInfo from './set-qq-share-info.js';
+import wxShare from './handle-share/wx.js';
+import wxlineShare from './handle-share/wxline.js';
+import qqShare from './handle-share/qq.js';
+import qzoneShare from './handle-share/qzone.js';
+import sinaShare from './handle-share/sina.js';
+
+const shareFuncMap = {
+  wx: wxShare,
+  wxline: wxlineShare,
+  qq: qqShare,
+  qzone: qzoneShare,
+  sina: sinaShare
+};
+
 const typesMap = ['wx', 'wxline', 'qq', 'qzone', 'sina'];
 
 export default {
@@ -65,15 +80,23 @@ export default {
     dom.innerHTML = tmp;
     dom.addEventListener('click', (e) => {
       typesMap.forEach(item => {
-        if (e.target.classList.has(`m-share-${item}`)) {
+        if (e.target.classList.contains(`m-share-${item}`)) {
           this.to(item);
         }
       });
     });
   },
   // 执行分享逻辑
-  to(type) {
-    
+  to(type, info) {
+    'wx', 'wxline', 'qq', 'qzone', 'sina'
+    import wxShare from './handle-share/wx.js';
+    import wxlineShare from './handle-share/wxline.js';
+    import qqShare from './handle-share/qq.js';
+    import qzoneShare from './handle-share/qzone.js';
+    import sinaShare from './handle-share/sina.js';
+    if (typesMap.indexOf(type) >= 0) {
+      shareFuncMap[type](info);
+    }
   },
   // 弹出弹层进行分享
   popup(config) {

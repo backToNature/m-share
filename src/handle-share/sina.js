@@ -1,9 +1,10 @@
 /*
  * @Author: backtonature 
- * @Date: 2018-05-23 21:20:45 
+ * @Date: 2018-05-24 14:23:11 
  * @Last Modified by: daringuo
- * @Last Modified time: 2018-05-24 14:21:03
+ * @Last Modified time: 2018-05-24 14:25:41
  */
+
 import util from '../util.js';
 import qqBrowserShare from './handle-qqbrowser.js';
 
@@ -20,19 +21,9 @@ export default (info) => {
     return;
   }
 
-  if (util.ua.isFromUC) {
-    // uc浏览器
-    if (util.ua.isFromIos) {
-      window.ucbrowser && window.ucbrowser.web_share(info.title, data.imgUrl, data.link, 'kWeixin', '', '', '');
-    } else {
-      window.ucweb && window.ucweb.startRequest("shell.page_share", [info.title, data.imgUrl, data.link, 'WechatFriends', '', '']);
-    }
-    return;
-  }
-
   if (util.ua.isFromQQBrower) {
     // qq浏览器
-    qqBrowserShare('wx', info);
+    qqBrowserShare('sina', info);
     return;
   }
 

@@ -98,11 +98,81 @@
   };
 
   /*
+   * @Author: backtonature 
+   * @Date: 2018-05-22 21:31:32 
+   * @Last Modified by: daringuo
+   * @Last Modified time: 2018-05-23 20:05:09
+   */
+  const qqJsSdkUrl = '//open.mobile.qq.com/sdk/qqapi.js?_bid=152';
+
+  const setShareInfo$1 = (info) => {
+    mqq.data.setShareInfo({
+      share_url: info.link,
+      title: info.title,
+      desc: info.desc,
+      image_url: info.imgUrl
+    });
+  };
+
+  var setQQshareInfo = (info) => {
+    if (window.mqq && mqq.data && mqq.data.setShareInfo) {
+      setShareInfo$1(info);
+    } else {
+      util.loadScript(qqJsSdkUrl, () => {
+        setShareInfo$1(info);
+      });
+    }
+  };
+
+  /*
+   * @Author: backtonature 
+   * @Date: 2018-05-23 21:36:23 
+   * @Last Modified by: daringuo
+   * @Last Modified time: 2018-05-24 12:14:06
+   */
+
+  /*
+   * @Author: backtonature 
+   * @Date: 2018-05-23 21:20:45 
+   * @Last Modified by: daringuo
+   * @Last Modified time: 2018-05-24 14:21:03
+   */
+
+  /*
+   * @Author: backtonature 
+   * @Date: 2018-05-24 14:17:21 
+   * @Last Modified by: daringuo
+   * @Last Modified time: 2018-05-24 14:24:17
+   */
+
+  /*
+   * @Author: backtonature 
+   * @Date: 2018-05-24 14:23:11 
+   * @Last Modified by: daringuo
+   * @Last Modified time: 2018-05-24 14:25:16
+   */
+
+  /*
+   * @Author: backtonature 
+   * @Date: 2018-05-24 14:23:11 
+   * @Last Modified by: daringuoture
+   * @Last Modified time: 2018-05-24 14:24:41
+   */
+
+  /*
+   * @Author: backtonature 
+   * @Date: 2018-05-24 14:23:11 
+   * @Last Modified by: daringuo
+   * @Last Modified time: 2018-05-24 14:25:41
+   */
+
+  /*
    * @Author: backToNature 
    * @Date: 2018-05-22 17:23:35 
    * @Last Modified by: daringuo
-   * @Last Modified time: 2018-05-23 21:19:02
+   * @Last Modified time: 2018-05-24 14:30:45
    */
+
   const typesMap = ['wx', 'wxline', 'qq', 'qzone', 'sina'];
 
   var index = {
@@ -162,15 +232,14 @@
       dom.innerHTML = tmp;
       dom.addEventListener('click', (e) => {
         typesMap.forEach(item => {
-          if (e.target.classList.has(`m-share-${item}`)) {
+          if (e.target.classList.contains(`m-share-${item}`)) {
             this.to(item);
           }
         });
       });
     },
     // 执行分享逻辑
-    to(type) {
-      
+    to(type, info) {
     },
     // 弹出弹层进行分享
     popup(config) {
