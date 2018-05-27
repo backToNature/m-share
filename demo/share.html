@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,minimum-scale=1.0, maximum-scale=1.0,width=device-width">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <title>Document</title>
+    <style>
+        div {
+            margin: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div><button id="weixin">分享到微信</button></div>
+    <div><button id="wexinFriend">分享到朋友圈</button></div>
+    <div><button id="qzone">分享到qzone</button></div>
+    <div><button id="qq">分享到qq</button></div>
+    <div><button id="weibo">分享到微博</button></div>
+    <script src="./share.js"></script>
+    <script>
+        document.querySelector('#weixin').addEventListener('click', () => {
+            window.QbShare.weixin();
+        });
+        document.querySelector('#wexinFriend').addEventListener('click', () => {
+            window.QbShare.wexinFriend();
+        });
+        document.querySelector('#qzone').addEventListener('click', () => {
+            window.QbShare.qzone();
+        });
+        document.querySelector('#qq').addEventListener('click', () => {
+            window.QbShare.wexinFriend();
+        });
+    </script>
+</body>
+</html>

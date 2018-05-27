@@ -6,11 +6,14 @@
  */
 import util from '../util.js';
 import qqBrowserShare from './handle-qqbrowser.js';
+import ui from '../ui.js';
 
 export default (info) => {
-  if (util.ua.isFromWx) {
+  // if (util.ua.isFromWx) {
+  if (true) {
+    ui.showRightTopTips('点击右上角分享给微信好友');
     // 微信客户端
-    alert('右上角给出提示');
+    // alert('右上角给出提示');
     return;
   }
 

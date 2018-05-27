@@ -12,15 +12,21 @@ const qqShareJsSdk = '//jsapi.qq.com/get?api=app.setShareInfo,app.share';
 export default (type, info) => {
   const doShare = (to_app) => {
     const _doShare = () => {
-      browser.app.share({
-        title: info.title,
-        description: info.desc,
-        url: info.link,
-        img_url: info.imgUrl,
-        to_app
-      });
+      try {
+        browser.app.share({
+          title: info.title,
+          description: info.desc,
+          url: info.link,
+          img_url: info.imgUrl,
+          to_app
+        }, (res) => {
+          alert(res);
+        });
+      } catch (e) {
+        alert(JSON.stringify(e));
+      }
     };
-    if ( window.browser && browser.app && browser.app.share) {
+    if (window.browser && browser.app && browser.app.share) {
       _doShare();
     } else {
       util.loadScript(qqShareJsSdk, _doShare);

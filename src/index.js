@@ -81,19 +81,18 @@ export default {
     dom.addEventListener('click', (e) => {
       typesMap.forEach(item => {
         if (e.target.classList.contains(`m-share-${item}`)) {
-          this.to(item);
+          this.to(item, {
+            title: _config.title,
+            desc: _config.desc,
+            link: _config.link,
+            imgUrl: _config.imgUrl
+          });
         }
       });
     });
   },
   // 执行分享逻辑
   to(type, info) {
-    'wx', 'wxline', 'qq', 'qzone', 'sina'
-    import wxShare from './handle-share/wx.js';
-    import wxlineShare from './handle-share/wxline.js';
-    import qqShare from './handle-share/qq.js';
-    import qzoneShare from './handle-share/qzone.js';
-    import sinaShare from './handle-share/sina.js';
     if (typesMap.indexOf(type) >= 0) {
       shareFuncMap[type](info);
     }
