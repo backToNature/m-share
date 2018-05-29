@@ -2,7 +2,7 @@
  * @Author: backToNature 
  * @Date: 2018-05-22 17:23:35 
  * @Last Modified by: daringuo
- * @Last Modified time: 2018-05-29 12:56:53
+ * @Last Modified time: 2018-05-29 18:38:55
  */
 import util from './util.js';
 import ui from './ui.js';
@@ -98,9 +98,5 @@ export default {
     if (typesMap.indexOf(type) >= 0) {
       shareFuncMap[type](info);
     }
-  },
-  // 弹出弹层进行分享
-  popup(config) {
-    
   }
 };
