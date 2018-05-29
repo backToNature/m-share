@@ -2,21 +2,22 @@
  * @Author: backtonature 
  * @Date: 2018-05-24 14:17:21 
  * @Last Modified by: daringuo
- * @Last Modified time: 2018-05-24 14:24:17
+ * @Last Modified time: 2018-05-29 12:29:22
  */
 import util from '../util.js';
 import qqBrowserShare from './handle-qqbrowser.js';
+import ui from '../ui.js';
 
 export default (info) => {
   if (util.ua.isFromWx) {
     // 微信客户端
-    alert('右上角给出提示');
+    ui.showRightTopTips();
     return;
   }
 
   if (util.ua.isFromQQ) {
     // 手机qq
-    alert('右上角给出提示');
+    ui.showRightTopTips();
     return;
   }
 

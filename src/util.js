@@ -1,8 +1,8 @@
 /*
  * @Author: backtonature 
  * @Date: 2018-05-22 20:08:19 
- * @Last Modified by:   backtonature 
- * @Last Modified time: 2018-05-22 20:08:19 
+ * @Last Modified by: daringuo
+ * @Last Modified time: 2018-05-29 11:24:07
  */
 const userAgent = window.navigator.userAgent;
 export default {
@@ -26,6 +26,17 @@ export default {
     }
     script.src = url;
     head.insertBefore(script, head.firstChild);
+  },
+  execStyle(cssText) {
+    const document = window.document;
+    const styleTag = document.createElement('style');
+    styleTag.setAttribute('type', 'text/css');
+    if (document.all) {
+      styleTag.styleSheet.cssText = cssText;
+    } else {
+      styleTag.innerHTML = cssText;
+    }
+    document.getElementsByTagName("head").item(0).appendChild(styleTag);
   },
   ua: {
     isFromAndroid: /android/gi.test(userAgent),

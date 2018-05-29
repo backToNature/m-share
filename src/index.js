@@ -2,9 +2,10 @@
  * @Author: backToNature 
  * @Date: 2018-05-22 17:23:35 
  * @Last Modified by: daringuo
- * @Last Modified time: 2018-05-24 14:34:28
+ * @Last Modified time: 2018-05-29 11:36:21
  */
 import util from './util.js';
+import ui from './ui.js';
 import setWxShareInfo from './set-wx-share-info.js';
 import setQQshareInfo from './set-qq-share-info.js';
 import wxShare from './handle-share/wx.js';
@@ -25,6 +26,7 @@ const typesMap = ['wx', 'wxline', 'qq', 'qzone', 'sina'];
 
 export default {
   init(config) {
+    ui.initStyle();
     const _config = {
       title: (config && config.title) || document.title,
       desc: (config && config.desc) || (document.querySelector('meta[name$="cription"]') && document.querySelector('meta[name$="cription"]').getAttribute('content')) || '',
@@ -69,7 +71,7 @@ export default {
     };
     const getTmpl = (type) => {
       if (typesMap.indexOf(type) >= 0) {
-        return `<button class="m-share-${type}">${type}</button>`;
+        return `<i class="m-share-${type} m-share-iconfont m-share-iconfont-${type}"></i>`;
       }
       return '';
     };
