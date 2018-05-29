@@ -2,7 +2,7 @@
  * @Author: backtonature 
  * @Date: 2018-05-23 21:36:23 
  * @Last Modified by: daringuo
- * @Last Modified time: 2018-05-24 12:14:06
+ * @Last Modified time: 2018-05-29 14:05:55
  */
 
 import util from '../util.js';
@@ -20,10 +20,8 @@ export default (type, info) => {
           img_url: info.imgUrl,
           to_app
         }, (res) => {
-          alert(res);
         });
       } catch (e) {
-        alert(JSON.stringify(e));
       }
     };
     if (window.browser && browser.app && browser.app.share) {

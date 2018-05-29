@@ -2,7 +2,7 @@
  * @Author: backToNature 
  * @Date: 2018-05-22 17:23:35 
  * @Last Modified by: daringuo
- * @Last Modified time: 2018-05-29 11:36:21
+ * @Last Modified time: 2018-05-29 12:56:53
  */
 import util from './util.js';
 import ui from './ui.js';
@@ -53,12 +53,12 @@ export default {
     }
 
     const domList = document.querySelectorAll('.m-share');
-    
-    // 初始化
-    domList.forEach(item => {
-      this.render(item, _config);
-    });
 
+    // 初始化
+    for (let i = 0; i < domList.length; i++) {
+      const item = domList[i];
+      this.render(item, _config);
+    }
   },
   // 渲染
   render(dom, config) {

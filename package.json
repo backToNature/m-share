@@ -6,7 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "http-server -c-1 -p 8000 ./",
-    "dev": "rollup src/index.js --watch --output.format umd --name \"Mshare\" --output.file dist/m-share.js"
+    "dev": "rollup src/index.js --watch --output.format umd --name \"Mshare\" --output.file dist/m-share.js",
+    "build": "npm run build:umd && npm run build:es6 && npm run build:iife",
+    "build:umd": "rollup src/index.js --output.format umd --name \"Mshare\" --output.file dist/m-share.js",
+    "build:es6": "rollup src/index.js --output.format es --name \"Mshare\" --output.file dist/m-share-es6.js",
+    "build:iife": "rollup src/index.js --output.format iife --name \"Mshare\" --output.file dist/m-share-iife.js"
   },
   "repository": {
     "type": "git",

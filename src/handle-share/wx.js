@@ -2,7 +2,7 @@
  * @Author: backtonature 
  * @Date: 2018-05-23 21:20:45 
  * @Last Modified by: daringuo
- * @Last Modified time: 2018-05-29 10:38:13
+ * @Last Modified time: 2018-05-29 14:25:55
  */
 import util from '../util.js';
 import qqBrowserShare from './handle-qqbrowser.js';
@@ -34,6 +34,8 @@ export default (info) => {
     qqBrowserShare('wx', info);
     return;
   }
+
+  ui.showBottomTips();
 
   // 都不是则弹层二维码提示分享
   
