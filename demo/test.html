@@ -13,9 +13,6 @@
     </style>
 </head>
 <body>
-    <div id="m-share-actionSheet">
-        
-    </div>
     <!-- 基础配置 -->
     <h1>基础配置</h1>
 	<div class="m-share"></div>
@@ -26,9 +23,11 @@
     <!-- 指定dom渲染 -->
     <h1>指定dom渲染</h1>
     <div class="myClass"></div>
+    <!-- 弹层分享 -->
+    <h1>弹层分享</h1>
+    <button class="actionSheet">点击弹层</button>
     <!-- js调用 -->
     <h1>js调用分享</h1>
-
     <button class="shareWx">分享到微信</button>
     <button class="shareWxline">分享到朋友圈</button>
     <button class="shareQq">分享到qq</button>
@@ -66,12 +65,17 @@
 
         document.querySelector('.shareQzone').addEventListener('click', () => {
             Mshare.to('qzone', config);
-            
         });
 
         document.querySelector('.shareSina').addEventListener('click', () => {
             Mshare.to('sina', config);
         });
+
+        document.querySelector('.actionSheet').addEventListener('click', () => {
+            Mshare.popup(config);
+        });
+
+        
     </script>
 </body>
 </html>

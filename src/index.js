@@ -6,9 +6,8 @@
  */
 import util from './util.js';
 import ui from './ui.js';
+import init from './init.js';
 import setWxShareInfo from './set-wx-share-info.js';
-import setQQshareInfo from './set-qq-share-info.js';
-import setNormalShareInfo from './set-normal-share-info.js';
 import wxShare from './handle-share/wx.js';
 import wxlineShare from './handle-share/wxline.js';
 import qqShare from './handle-share/qq.js';
@@ -25,39 +24,34 @@ const shareFuncMap = {
 
 const typesMap = ['wx', 'wxline', 'qq', 'qzone', 'sina'];
 
+const getDefaultConfig = (config) => {
+  return {
+    title: (config && config.title) || document.title,
+    desc: (config && config.desc) || (document.querySelector('meta[name$="cription"]') && document.querySelector('meta[name$="cription"]').getAttribute('content')) || '',
+    link: (config && config.link) || window.location.href,
+    imgUrl: (config && config.imgUrl) || (document.querySelector('img') && document.querySelector('img').getAttribute('src')) || '',
+    types: (config && Array.isArray(config.types) && config.types) || ['wx', 'wxline', 'qq', 'qzone', 'sina'],
+    wx: (config && config.wx) || null
+  };
+};
+
 export default {
-  init(config) {
-    ui.initStyle();
-    const _config = {
-      title: (config && config.title) || document.title,
-      desc: (config && config.desc) || (document.querySelector('meta[name$="cription"]') && document.querySelector('meta[name$="cription"]').getAttribute('content')) || '',
-      link: (config && config.link) || window.location.href,
-      imgUrl: (config && config.imgUrl) || (document.querySelector('img') && document.querySelector('img').getAttribute('src')) || '',
-      types: (config && Array.isArray(config.types) && config.types) || ['wx', 'wxline', 'qq', 'qzone', 'sina'],
-      wx: (config && config.wx) || null
-    };
-    const info = {
-      title: _config.title,
-      desc: _config.desc,
-      link: _config.link,
-      imgUrl: _config.imgUrl
-    };
-    if (config.setNormal !== false) {
-      setNormalShareInfo(info);
-    }
-
-    // 如果有微信参数，则配置微信分享内容
+  wxConfig(config) {
+    const _config = getDefaultConfig(config);
     if (util.ua.isFromWx && _config.wx && _config.wx.appId && _config.wx.timestamp && _config.wx.nonceStr && _config.wx.signature) {
-      setWxShareInfo(config.types, _config.wx, info);
+      const info = {
+        title: _config.title,
+        desc: _config.desc,
+        link: _config.link,
+        imgUrl: _config.imgUrl
+      };
+      setWxShareInfo(typesMap, _config.wx, info);
     }
-
-    // 配置手q分享内容
-    if (util.ua.isFromQQ) {
-      setQQshareInfo(config.types, info);
-    }
-
+  },
+  init(config) {
+    const _config = getDefaultConfig(config);
+    init(_config);
     const domList = document.querySelectorAll('.m-share');
-
     // 初始化
     for (let i = 0; i < domList.length; i++) {
       const item = domList[i];
@@ -66,13 +60,8 @@ export default {
   },
   // 渲染
   render(dom, config) {
-    const _config = {
-      title: dom.getAttribute('data-title') || config.title,
-      desc: dom.getAttribute('data-desc') || config.desc,
-      link: dom.getAttribute('data-link') || config.link,
-      imgUrl: dom.getAttribute('data-imgUrl') || config.imgUrl,
-      types: (dom.getAttribute('data-types') && dom.getAttribute('data-types').split(',')) || config.types
-    };
+    const _config = getDefaultConfig(config);
+    init(_config);
     const getTmpl = (type) => {
       if (typesMap.indexOf(type) >= 0) {
         return `<i class="m-share-${type} m-share-iconfont m-share-iconfont-${type}"></i>`;
@@ -99,9 +88,51 @@ export default {
     });
   },
   // 执行分享逻辑
-  to(type, info) {
+  to(type, config) {
+    const _config = getDefaultConfig(config);
+    init(_config);
     if (typesMap.indexOf(type) >= 0) {
-      shareFuncMap[type](info);
+      shareFuncMap[type](_config);
     }
+  },
+  // 弹层分享
+  popup(config) {
+    const _config = getDefaultConfig(config);
+    init(_config);
+    const textMap = {
+      wx: '微信好友',
+      wxline: '朋友圈',
+      qq: 'QQ好友',
+      qzone: 'QQ空间',
+      sina: '微博'
+    };
+    const dom = document.createElement('div');
+    dom.className = 'm-share-flex';
+    let tmp = '';
+    const getTmpl = (type) => {
+      if (typesMap.indexOf(type) >= 0) {
+        return `<div class="m-share-cell"><i class="m-share-${type} m-share-iconfont m-share-iconfont-${type}"></i><div class="m-share-sheet-title">${textMap[type]}</div></div>`;
+      }
+      return '';
+    };
+    _config.types.forEach(item => {
+      tmp += getTmpl(item);
+    });
+    dom.innerHTML = tmp;   
+    dom.addEventListener('click', (e) => {
+      const target = e.target;
+      typesMap.forEach(item => {
+        if (target.classList.contains(`m-share-${item}`)) {
+          ui.hideActionSheet();
+          this.to(item, {
+            title: _config.title,
+            desc: _config.desc,
+            link: _config.link,
+            imgUrl: _config.imgUrl
+          });
+        }
+      });
+    });
+    ui.showActionSheet(dom);
   }
 };

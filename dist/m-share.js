@@ -81,6 +81,23 @@
     bottom: 0;
     z-index: 2147483647;
     background: #fff;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 30px 20px;
+    -webkit-transform: translateY(100%);
+    transform: translateY(100%);
+    -webkit-transition: -webkit-transform .2s ease-in;
+    transition: transform .2s ease-in;
+  }
+  #m-share-actionSheet div {
+    margin: 0;
+    padding: 0;
+  }
+  #m-share-actionSheet .m-share-sheet-title {
+    font-size: 12px;
+    color: #ababab;
+    text-align: center;
+    margin:10px 0 0 0;
   }
   #m-share-actionSheet .m-share-flex {
     display: -webkit-box!important;
@@ -103,7 +120,11 @@
     max-width: 100%;
     display: block;
     padding: 0!important;
-    position: relative
+    position: relative;
+    text-align: center;
+  }
+  #m-share-actionSheet .m-share-iconfont {
+    margin: 0;
   }
   .m-share-tips {
     font-family: "PingFang SC",Arial,"\\5FAE\\8F6F\\96C5\\9ED1",Helvetica,sans-serif;
@@ -272,23 +293,42 @@
         isStyleLoaded = true;
       }
     },
-    showActionSheet() {
+    showActionSheet(dom) {
+      this.showMask();
       const $sheet = document.createElement('div');
       $sheet.id = 'm-share-actionSheet';
-      $sheet.innerHTML = `
-    <div class="m-share-flex">
-      <i class="m-share-cell m-share-wx m-share-iconfont m-share-iconfont-wx"></i>
-      <i class="m-share-cell m-share-wxline m-share-iconfont m-share-iconfont-wxline"></i>
-      <i class="m-share-cell m-share-qq m-share-iconfont m-share-iconfont-qq"></i>
-      <i class="m-share-cell m-share-qzone m-share-iconfont m-share-iconfont-qzone"></i>
-      <i class="m-share-cell m-share-sina m-share-iconfont m-share-iconfont-sina"></i>
-    </div>
-    `;
+      $sheet.appendChild(dom);
       document.body.appendChild($sheet);
+      window.setTimeout(() => {
+        $sheet.style.cssText = '-webkit-transform: translateY(0);transform: translateY(0);';
+      }, 0);
+    },
+    hideActionSheet() {
+      const dom = document.querySelector('#m-share-actionSheet');
+      if (dom) {
+        // 渐变消失
+        // dom.addEventListener('webkitTransitionend', () => {
+        //   dom.remove();
+        // });
+        // dom.addEventListener('transitionend', () => {
+        //   dom.remove();
+        // });
+        // dom.style.cssText = '-webkit-transform: translateY(100%);transform: translateY(100%);';
+        dom.remove();
+      }
     },
     showMask() {
+      if (document.querySelector('.m-share-mask')) {
+        return;
+      }
       const $div = document.createElement('div');
       $div.className = 'm-share-mask';
+      $div.addEventListener('click', () => {
+        this.hideActionSheet();
+        this.hideBottomTips();
+        this.hideRightTips();
+        this.hideMask();
+      });
       document.body.appendChild($div);
       window.setTimeout(() => {
         $div.style.opacity = 0.7;
@@ -298,10 +338,15 @@
       const domList = document.querySelectorAll('.m-share-mask');
       for (let i = 0; i < domList.length; i++) {
         const item = domList[i];
-        item.remove();
+        const removeDom = () => item.remove();
+        // 渐变消失
+        // item.addEventListener('webkitTransitionend', removeDom);
+        // item.addEventListener('transitionend', removeDom);
+        // item.style.cssText = 'opacity: 0';
+        removeDom();
       }
     },
-    showBottomTips(tips) {
+    showBottomTips() {
       this.showMask();
       const $tips = document.createElement('div');
       $tips.className = 'm-share-tips-bottom';
@@ -310,7 +355,7 @@
       window.setTimeout(() => {
         this.hideMask();
         this.hideBottomTips();
-      }, 2000);
+      }, 1400);
     },
     hideBottomTips() {
       const domList = document.querySelectorAll('.m-share-tips-bottom');
@@ -334,7 +379,7 @@
       window.setTimeout(() => {
         this.hideMask();
         this.hideRightTips();
-      }, 2000);
+      }, 1400);
     },
     hideRightTips() {
       const domList = document.querySelectorAll('.m-share-tips');
@@ -347,13 +392,97 @@
 
   /*
    * @Author: daringuo 
+   * @Date: 2018-05-30 12:54:24 
+   * @Last Modified by: daringuo
+   * @Last Modified time: 2018-05-30 13:39:38
+   */
+  var setNormalShareInfo = (info) => {
+    if (info.desc && !document.querySelector('meta[name$="cription"]')) {
+      const $meta = document.createElement('meta');
+      $meta.setAttribute('description', info.desc);
+    }
+    // 添加隐藏的img标签在body最前面
+    if (info.imgUrl) {
+      const $img = document.createElement('img');
+      $img.style.cssText = 'width: 0;height: 0;position: absolute;z-index: -9999;top: -99999px;left: -99999px;';
+      $img.onload = () => {
+        document.body.insertBefore($img, document.body.firstChild);
+      };
+      $img.onerror = () => {
+        $img.remove();
+      };
+      $img.src = info.imgUrl;
+    }
+  };
+
+  /*
+   * @Author: backtonature 
+   * @Date: 2018-05-22 21:31:32 
+   * @Last Modified by: daringuo
+   * @Last Modified time: 2018-05-23 20:05:09
+   */
+  const qqJsSdkUrl = '//open.mobile.qq.com/sdk/qqapi.js?_bid=152';
+
+  const setShareInfo = (info) => {
+    mqq.data.setShareInfo({
+      share_url: info.link,
+      title: info.title,
+      desc: info.desc,
+      image_url: info.imgUrl
+    });
+  };
+
+  var setQQshareInfo = (info) => {
+    if (window.mqq && mqq.data && mqq.data.setShareInfo) {
+      setShareInfo(info);
+    } else {
+      util.loadScript(qqJsSdkUrl, () => {
+        setShareInfo(info);
+      });
+    }
+  };
+
+  /*
+   * @Author: backToNature 
+   * @Date: 2018-05-22 17:23:35 
+   * @Last Modified by: daringuo
+   * @Last Modified time: 2018-05-30 17:39:03
+   */
+
+  let isInit = false;
+
+  var init = (config) => {
+    if (!isInit) {
+      const info = {
+        title: config.title,
+        desc: config.desc,
+        link: config.link,
+        imgUrl: config.imgUrl
+      };
+      isInit = true;
+      ui.initStyle(); // 加载样式
+
+      // 配置通用分享设置
+      if (config.setNormal !== false) {
+        setNormalShareInfo(info);
+      }
+       // 配置手q分享内容
+       if (util.ua.isFromQQ) {
+        setQQshareInfo(config.types, info);
+      }
+
+    }
+  };
+
+  /*
+   * @Author: daringuo 
    * @Date: 2018-05-22 20:12:58 
    * @Last Modified by: daringuo
    * @Last Modified time: 2018-05-22 21:27:27
    */
   const wxJsSdkUrl = '//res.wx.qq.com/open/js/jweixin-1.2.0.js';
 
-  const setShareInfo = (type, info) => {
+  const setShareInfo$1 = (type, info) => {
     switch (type) {
       case 'wx':
         wx.onMenuShareAppMessage(info); // 设置分享到微信好友内容
@@ -384,7 +513,7 @@
       wx.ready(() => {
         try {
           types.forEach(item => {
-            setShareInfo(item, info);
+            setShareInfo$1(item, info);
           });
         } catch (e) {}
       });
@@ -395,58 +524,6 @@
       util.loadScript(wxJsSdkUrl, () => {
         doSet();
       });
-    }
-  };
-
-  /*
-   * @Author: backtonature 
-   * @Date: 2018-05-22 21:31:32 
-   * @Last Modified by: daringuo
-   * @Last Modified time: 2018-05-23 20:05:09
-   */
-  const qqJsSdkUrl = '//open.mobile.qq.com/sdk/qqapi.js?_bid=152';
-
-  const setShareInfo$1 = (info) => {
-    mqq.data.setShareInfo({
-      share_url: info.link,
-      title: info.title,
-      desc: info.desc,
-      image_url: info.imgUrl
-    });
-  };
-
-  var setQQshareInfo = (info) => {
-    if (window.mqq && mqq.data && mqq.data.setShareInfo) {
-      setShareInfo$1(info);
-    } else {
-      util.loadScript(qqJsSdkUrl, () => {
-        setShareInfo$1(info);
-      });
-    }
-  };
-
-  /*
-   * @Author: daringuo 
-   * @Date: 2018-05-30 12:54:24 
-   * @Last Modified by: daringuo
-   * @Last Modified time: 2018-05-30 13:39:38
-   */
-  var setNormalShareInfo = (info) => {
-    if (info.desc && !document.querySelector('meta[name$="cription"]')) {
-      const $meta = document.createElement('meta');
-      $meta.setAttribute('description', info.desc);
-    }
-    // 添加隐藏的img标签在body最前面
-    if (info.imgUrl) {
-      const $img = document.createElement('img');
-      $img.style.cssText = 'width: 0;height: 0;position: absolute;z-index: -9999;top: -99999px;left: -99999px;';
-      $img.onload = () => {
-        document.body.insertBefore($img, document.body.firstChild);
-      };
-      $img.onerror = () => {
-        $img.remove();
-      };
-      $img.src = info.imgUrl;
     }
   };
 
@@ -668,39 +745,34 @@
 
   const typesMap = ['wx', 'wxline', 'qq', 'qzone', 'sina'];
 
+  const getDefaultConfig = (config) => {
+    return {
+      title: (config && config.title) || document.title,
+      desc: (config && config.desc) || (document.querySelector('meta[name$="cription"]') && document.querySelector('meta[name$="cription"]').getAttribute('content')) || '',
+      link: (config && config.link) || window.location.href,
+      imgUrl: (config && config.imgUrl) || (document.querySelector('img') && document.querySelector('img').getAttribute('src')) || '',
+      types: (config && Array.isArray(config.types) && config.types) || ['wx', 'wxline', 'qq', 'qzone', 'sina'],
+      wx: (config && config.wx) || null
+    };
+  };
+
   var index = {
-    init(config) {
-      ui.initStyle();
-      const _config = {
-        title: (config && config.title) || document.title,
-        desc: (config && config.desc) || (document.querySelector('meta[name$="cription"]') && document.querySelector('meta[name$="cription"]').getAttribute('content')) || '',
-        link: (config && config.link) || window.location.href,
-        imgUrl: (config && config.imgUrl) || (document.querySelector('img') && document.querySelector('img').getAttribute('src')) || '',
-        types: (config && Array.isArray(config.types) && config.types) || ['wx', 'wxline', 'qq', 'qzone', 'sina'],
-        wx: (config && config.wx) || null
-      };
-      const info = {
-        title: _config.title,
-        desc: _config.desc,
-        link: _config.link,
-        imgUrl: _config.imgUrl
-      };
-      if (config.setNormal !== false) {
-        setNormalShareInfo(info);
-      }
-
-      // 如果有微信参数，则配置微信分享内容
+    wxConfig(config) {
+      const _config = getDefaultConfig(config);
       if (util.ua.isFromWx && _config.wx && _config.wx.appId && _config.wx.timestamp && _config.wx.nonceStr && _config.wx.signature) {
-        setWxShareInfo(config.types, _config.wx, info);
+        const info = {
+          title: _config.title,
+          desc: _config.desc,
+          link: _config.link,
+          imgUrl: _config.imgUrl
+        };
+        setWxShareInfo(typesMap, _config.wx, info);
       }
-
-      // 配置手q分享内容
-      if (util.ua.isFromQQ) {
-        setQQshareInfo(config.types, info);
-      }
-
+    },
+    init(config) {
+      const _config = getDefaultConfig(config);
+      init(_config);
       const domList = document.querySelectorAll('.m-share');
-
       // 初始化
       for (let i = 0; i < domList.length; i++) {
         const item = domList[i];
@@ -709,13 +781,8 @@
     },
     // 渲染
     render(dom, config) {
-      const _config = {
-        title: dom.getAttribute('data-title') || config.title,
-        desc: dom.getAttribute('data-desc') || config.desc,
-        link: dom.getAttribute('data-link') || config.link,
-        imgUrl: dom.getAttribute('data-imgUrl') || config.imgUrl,
-        types: (dom.getAttribute('data-types') && dom.getAttribute('data-types').split(',')) || config.types
-      };
+      const _config = getDefaultConfig(config);
+      init(_config);
       const getTmpl = (type) => {
         if (typesMap.indexOf(type) >= 0) {
           return `<i class="m-share-${type} m-share-iconfont m-share-iconfont-${type}"></i>`;
@@ -742,10 +809,52 @@
       });
     },
     // 执行分享逻辑
-    to(type, info) {
+    to(type, config) {
+      const _config = getDefaultConfig(config);
+      init(_config);
       if (typesMap.indexOf(type) >= 0) {
-        shareFuncMap[type](info);
+        shareFuncMap[type](_config);
       }
+    },
+    // 弹层分享
+    popup(config) {
+      const _config = getDefaultConfig(config);
+      init(_config);
+      const textMap = {
+        wx: '微信好友',
+        wxline: '朋友圈',
+        qq: 'QQ好友',
+        qzone: 'QQ空间',
+        sina: '微博'
+      };
+      const dom = document.createElement('div');
+      dom.className = 'm-share-flex';
+      let tmp = '';
+      const getTmpl = (type) => {
+        if (typesMap.indexOf(type) >= 0) {
+          return `<div class="m-share-cell"><i class="m-share-${type} m-share-iconfont m-share-iconfont-${type}"></i><div class="m-share-sheet-title">${textMap[type]}</div></div>`;
+        }
+        return '';
+      };
+      _config.types.forEach(item => {
+        tmp += getTmpl(item);
+      });
+      dom.innerHTML = tmp;   
+      dom.addEventListener('click', (e) => {
+        const target = e.target;
+        typesMap.forEach(item => {
+          if (target.classList.contains(`m-share-${item}`)) {
+            ui.hideActionSheet();
+            this.to(item, {
+              title: _config.title,
+              desc: _config.desc,
+              link: _config.link,
+              imgUrl: _config.imgUrl
+            });
+          }
+        });
+      });
+      ui.showActionSheet(dom);
     }
   };
 

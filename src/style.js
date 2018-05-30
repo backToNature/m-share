@@ -24,6 +24,23 @@ export default {
     bottom: 0;
     z-index: 2147483647;
     background: #fff;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 30px 20px;
+    -webkit-transform: translateY(100%);
+    transform: translateY(100%);
+    -webkit-transition: -webkit-transform .2s ease-in;
+    transition: transform .2s ease-in;
+  }
+  #m-share-actionSheet div {
+    margin: 0;
+    padding: 0;
+  }
+  #m-share-actionSheet .m-share-sheet-title {
+    font-size: 12px;
+    color: #ababab;
+    text-align: center;
+    margin:10px 0 0 0;
   }
   #m-share-actionSheet .m-share-flex {
     display: -webkit-box!important;
@@ -46,7 +63,11 @@ export default {
     max-width: 100%;
     display: block;
     padding: 0!important;
-    position: relative
+    position: relative;
+    text-align: center;
+  }
+  #m-share-actionSheet .m-share-iconfont {
+    margin: 0;
   }
   .m-share-tips {
     font-family: "PingFang SC",Arial,"\\5FAE\\8F6F\\96C5\\9ED1",Helvetica,sans-serif;
