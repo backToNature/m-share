@@ -13,8 +13,23 @@
     </style>
 </head>
 <body>
+    <!-- 基础配置 -->
+    <h1>基础配置</h1>
 	<div class="m-share"></div>
     <script src="../dist/m-share.js"></script>
+    <!-- 通过data-修改配置 -->
+    <h1>通过data-${param}修改配置</h1>
+    <div class="m-share" data-title="我是修改过的配置" data-types="wx,qq"></div>
+    <!-- 指定dom渲染 -->
+    <h1>指定dom渲染</h1>
+    <div class="myClass"></div>
+    <!-- js调用 -->
+    <h1>js调用分享</h1>
+    <button class="shareWx">分享到微信</button>
+    <button class="shareWxline">分享到朋友圈</button>
+    <button class="shareQq">分享到qq</button>
+    <button class="shareQzone">分享到qzone</button>
+    <button class="shareSina">分享到微博</button>
     <script>
         var config = {
             title: '我就是标题', // 标题，默认读取document.title
@@ -31,6 +46,28 @@
             }
         };
         Mshare.init(config);
+        Mshare.render(document.querySelector('.myClass'), config);
+
+        document.querySelector('.shareWx').addEventListener('click', () => {
+            Mshare.to('wx', config);
+        });
+
+        document.querySelector('.shareWxline').addEventListener('click', () => {
+            Mshare.to('wxline', config);
+        });
+
+        document.querySelector('.shareQq').addEventListener('click', () => {
+            Mshare.to('qq', config);
+        });
+
+        document.querySelector('.shareQzone').addEventListener('click', () => {
+            Mshare.to('qzone', config);
+            
+        });
+
+        document.querySelector('.shareSina').addEventListener('click', () => {
+            Mshare.to('sina', config);
+        });
     </script>
 </body>
 </html>

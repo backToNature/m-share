@@ -81,8 +81,9 @@ export default {
     });
     dom.innerHTML = tmp;
     dom.addEventListener('click', (e) => {
+      const target = e.target;
       typesMap.forEach(item => {
-        if (e.target.classList.contains(`m-share-${item}`)) {
+        if (target.classList.contains(`m-share-${item}`)) {
           this.to(item, {
             title: _config.title,
             desc: _config.desc,

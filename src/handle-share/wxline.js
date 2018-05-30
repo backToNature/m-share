@@ -37,5 +37,5 @@ export default (info) => {
     return;
   }
 
-  // 都不是则弹层二维码提示分享
+  ui.showBottomTips();
 };

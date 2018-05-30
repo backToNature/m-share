@@ -1,0 +1,4 @@
+{
+    "comments": false,
+    "presets": ["env", { "modules": false , "loose": true }]
+}

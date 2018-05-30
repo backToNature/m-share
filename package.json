@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "http-server -c-1 -p 8000 ./",
+    "build-es5": "rollup -c rollup.config.js",
     "dev": "rollup src/index.js --watch --output.format umd --name \"Mshare\" --output.file dist/m-share.js",
     "build": "npm run build:umd && npm run build:es6 && npm run build:iife",
     "build:umd": "rollup src/index.js --output.format umd --name \"Mshare\" --output.file dist/m-share.js",
@@ -23,7 +24,10 @@
   },
   "homepage": "https://github.com/backToNature/m-share#readme",
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
     "http-server": "^0.11.1",
-    "rollup": "^0.59.2"
+    "rollup": "^0.59.2",
+    "rollup-plugin-babel": "^3.0.4"
   }
 }

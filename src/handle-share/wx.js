@@ -35,8 +35,4 @@ export default (info) => {
   }
 
   ui.showBottomTips();
-
-  // 都不是则弹层二维码提示分享
-  
-
 };

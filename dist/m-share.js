@@ -419,10 +419,6 @@
     }
 
     ui.showBottomTips();
-
-    // 都不是则弹层二维码提示分享
-    
-
   };
 
   /*
@@ -461,7 +457,7 @@
       return;
     }
 
-    // 都不是则弹层二维码提示分享
+    ui.showBottomTips();
   };
 
   /*
@@ -490,9 +486,7 @@
       return;
     }
 
-    // 都不是则弹层二维码提示分享
-    
-
+    ui.showBottomTips();
   };
 
   /*
@@ -547,7 +541,7 @@
    * @Author: backToNature 
    * @Date: 2018-05-22 17:23:35 
    * @Last Modified by: daringuo
-   * @Last Modified time: 2018-05-29 12:56:53
+   * @Last Modified time: 2018-05-29 18:38:55
    */
 
   const shareFuncMap = {
@@ -617,8 +611,9 @@
       });
       dom.innerHTML = tmp;
       dom.addEventListener('click', (e) => {
+        const target = e.target;
         typesMap.forEach(item => {
-          if (e.target.classList.contains(`m-share-${item}`)) {
+          if (target.classList.contains(`m-share-${item}`)) {
             this.to(item, {
               title: _config.title,
               desc: _config.desc,
@@ -634,10 +629,6 @@
       if (typesMap.indexOf(type) >= 0) {
         shareFuncMap[type](info);
       }
-    },
-    // 弹出弹层进行分享
-    popup(config) {
-      
     }
   };
 
