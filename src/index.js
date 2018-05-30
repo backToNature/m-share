@@ -2,12 +2,13 @@
  * @Author: backToNature 
  * @Date: 2018-05-22 17:23:35 
  * @Last Modified by: daringuo
- * @Last Modified time: 2018-05-29 18:38:55
+ * @Last Modified time: 2018-05-30 17:39:03
  */
 import util from './util.js';
 import ui from './ui.js';
 import setWxShareInfo from './set-wx-share-info.js';
 import setQQshareInfo from './set-qq-share-info.js';
+import setNormalShareInfo from './set-normal-share-info.js';
 import wxShare from './handle-share/wx.js';
 import wxlineShare from './handle-share/wxline.js';
 import qqShare from './handle-share/qq.js';
@@ -41,10 +42,13 @@ export default {
       link: _config.link,
       imgUrl: _config.imgUrl
     };
+    if (config.setNormal !== false) {
+      setNormalShareInfo(info);
+    }
 
     // 如果有微信参数，则配置微信分享内容
     if (util.ua.isFromWx && _config.wx && _config.wx.appId && _config.wx.timestamp && _config.wx.nonceStr && _config.wx.signature) {
-      setWxShareInfo(config.types, _config, info);
+      setWxShareInfo(config.types, _config.wx, info);
     }
 
     // 配置手q分享内容

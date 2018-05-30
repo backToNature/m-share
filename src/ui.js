@@ -2,7 +2,7 @@
  * @Author: backtonature 
  * @Date: 2018-05-27 20:08:19 
  * @Last Modified by: daringuo
- * @Last Modified time: 2018-05-29 17:24:54
+ * @Last Modified time: 2018-05-30 21:05:38
  */
 import util from './util.js';
 import style from './style.js';
@@ -15,10 +15,27 @@ export default {
       isStyleLoaded = true;
     }
   },
+  showActionSheet() {
+    const $sheet = document.createElement('div');
+    $sheet.id = 'm-share-actionSheet';
+    $sheet.innerHTML = `
+    <div class="m-share-flex">
+      <i class="m-share-cell m-share-wx m-share-iconfont m-share-iconfont-wx"></i>
+      <i class="m-share-cell m-share-wxline m-share-iconfont m-share-iconfont-wxline"></i>
+      <i class="m-share-cell m-share-qq m-share-iconfont m-share-iconfont-qq"></i>
+      <i class="m-share-cell m-share-qzone m-share-iconfont m-share-iconfont-qzone"></i>
+      <i class="m-share-cell m-share-sina m-share-iconfont m-share-iconfont-sina"></i>
+    </div>
+    `;
+    document.body.appendChild($sheet);
+  },
   showMask() {
     const $div = document.createElement('div');
     $div.className = 'm-share-mask';
     document.body.appendChild($div);
+    window.setTimeout(() => {
+      $div.style.opacity = 0.7;
+    }, 0);
   },
   hideMask() {
     const domList = document.querySelectorAll('.m-share-mask');
@@ -31,7 +48,7 @@ export default {
     this.showMask();
     const $tips = document.createElement('div');
     $tips.className = 'm-share-tips-bottom';
-    $tips.innerHTML = '<p>请打开浏览器的菜单进行分享</p><p>菜单一般为<i class="m-share-iconfont m-share-iconfont-menu"></i>图标</p><p>ios为<i class="m-share-iconfont m-share-iconfont-share"></i>图标</p>';
+    $tips.innerHTML = '请打开浏览器的菜单进行分享点击“<i class="m-share-iconfont m-share-iconfont-menu"></i>”或“<i class="m-share-iconfont m-share-iconfont-share"></i>”';
     document.body.appendChild($tips);
     window.setTimeout(() => {
       this.hideMask();
@@ -49,6 +66,13 @@ export default {
     this.showMask();
     const $tips = document.createElement('div');
     $tips.className = 'm-share-tips';
+    $tips.innerHTML = `
+      <div class="m-share-tips-w">
+        <div class="m-share-tips-p">点击右上角“<i class="m-share-iconfont m-share-iconfont-dots"></i>”</div>
+        <div class="m-share-tips-p">分享给朋友吧！</div>
+      </div>
+      <div class="m-share-tips-arrow"></div>
+    `;
     document.body.appendChild($tips);
     window.setTimeout(() => {
       this.hideMask();

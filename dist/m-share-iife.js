@@ -334,6 +334,31 @@ var Mshare = (function () {
   };
 
   /*
+   * @Author: daringuo 
+   * @Date: 2018-05-30 12:54:24 
+   * @Last Modified by: daringuo
+   * @Last Modified time: 2018-05-30 13:39:38
+   */
+  var setNormalShareInfo = (info) => {
+    if (info.desc && !document.querySelector('meta[name$="cription"]')) {
+      const $meta = document.createElement('meta');
+      $meta.setAttribute('description', info.desc);
+    }
+    // 添加隐藏的img标签在body最前面
+    if (info.imgUrl) {
+      const $img = document.createElement('img');
+      $img.style.cssText = 'width: 0;height: 0;position: absolute;z-index: -9999;top: -99999px;left: -99999px;';
+      $img.onload = () => {
+        document.body.insertBefore($img, document.body.firstChild);
+      };
+      $img.onerror = () => {
+        $img.remove();
+      };
+      $img.src = info.imgUrl;
+    }
+  };
+
+  /*
    * @Author: backtonature 
    * @Date: 2018-05-23 21:36:23 
    * @Last Modified by: daringuo
@@ -416,10 +441,6 @@ var Mshare = (function () {
     }
 
     ui.showBottomTips();
-
-    // 都不是则弹层二维码提示分享
-    
-
   };
 
   /*
@@ -458,7 +479,7 @@ var Mshare = (function () {
       return;
     }
 
-    // 都不是则弹层二维码提示分享
+    ui.showBottomTips();
   };
 
   /*
@@ -487,9 +508,7 @@ var Mshare = (function () {
       return;
     }
 
-    // 都不是则弹层二维码提示分享
-    
-
+    ui.showBottomTips();
   };
 
   /*
@@ -544,7 +563,7 @@ var Mshare = (function () {
    * @Author: backToNature 
    * @Date: 2018-05-22 17:23:35 
    * @Last Modified by: daringuo
-   * @Last Modified time: 2018-05-29 12:56:53
+   * @Last Modified time: 2018-05-30 13:52:40
    */
 
   const shareFuncMap = {
@@ -560,6 +579,7 @@ var Mshare = (function () {
   var index = {
     init(config) {
       ui.initStyle();
+      
       const _config = {
         title: (config && config.title) || document.title,
         desc: (config && config.desc) || (document.querySelector('meta[name$="cription"]') && document.querySelector('meta[name$="cription"]').getAttribute('content')) || '',
@@ -574,10 +594,13 @@ var Mshare = (function () {
         link: _config.link,
         imgUrl: _config.imgUrl
       };
+      if (config.setNormal !== false) {
+        setNormalShareInfo(info);
+      }
 
       // 如果有微信参数，则配置微信分享内容
       if (util.ua.isFromWx && _config.wx && _config.wx.appId && _config.wx.timestamp && _config.wx.nonceStr && _config.wx.signature) {
-        setWxShareInfo(config.types, _config, info);
+        setWxShareInfo(config.types, _config.wx, info);
       }
 
       // 配置手q分享内容
@@ -614,8 +637,9 @@ var Mshare = (function () {
       });
       dom.innerHTML = tmp;
       dom.addEventListener('click', (e) => {
+        const target = e.target;
         typesMap.forEach(item => {
-          if (e.target.classList.contains(`m-share-${item}`)) {
+          if (target.classList.contains(`m-share-${item}`)) {
             this.to(item, {
               title: _config.title,
               desc: _config.desc,
@@ -631,10 +655,6 @@ var Mshare = (function () {
       if (typesMap.indexOf(type) >= 0) {
         shareFuncMap[type](info);
       }
-    },
-    // 弹出弹层进行分享
-    popup(config) {
-      
     }
   };
 
