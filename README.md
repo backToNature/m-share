@@ -1,5 +1,9 @@
 # m-share
 
+h5页面分享组件、支持分享到微信、朋友圈、qq、QQ空间、QQ好友。
+
+
+
 移动端分享组件，一键分享微博、QQ空间、QQ好友、微信
 
  \- |微信客户端 | 手q | qq浏览器 | uc浏览器 | 其他浏览器
@@ -17,11 +21,11 @@
 
 1. npm安装
 
-	npm install m-share
-
+		npm install m-share
+	
 2. script引入
 
-	<script src="m-share.js"></script>
+		<script src="m-share.js"></script>
 
 ## 基本使用
 

@@ -730,7 +730,7 @@
       return;
     }
 
-    const query = `url=${encodeURIComponent(info.link)}&title=${encodeURIComponent(info.title)}&desc=${encodeURIComponent(info.desc)}&pic=${encodeURIComponent(info.imgUrl)}`;
+    const query = `url=${encodeURIComponent(info.link)}&title=${encodeURIComponent(info.desc)}&desc=${encodeURIComponent(info.desc)}&pic=${encodeURIComponent(info.imgUrl)}`;
     location.href = `http://service.weibo.com/share/share.php?${query}`;
     // 都不是则弹层二维码提示分享
   };
