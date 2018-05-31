@@ -478,7 +478,7 @@
    * @Author: daringuo 
    * @Date: 2018-05-22 20:12:58 
    * @Last Modified by: daringuo
-   * @Last Modified time: 2018-05-22 21:27:27
+   * @Last Modified time: 2018-05-31 15:16:45
    */
   const wxJsSdkUrl = '//res.wx.qq.com/open/js/jweixin-1.2.0.js';
 
@@ -495,25 +495,32 @@
         break;
       case 'qzone':
         wx.onMenuShareQZone(info); // 设置分享到qq空间
-        break;
+        break
     }
   };
 
   let isConfig = false;
 
-  var setWxShareInfo = (types, wxConfig, info) => {
+  var setWxShareInfo = (types, config) => {
+    const wxConfig = config.wx;
     const doSet = () => {
-      const _config = Object.assign({
-        jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareQZone']
+      const _wxConfig = Object.assign({
+        jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareQZone', 'onMenuShareWeibo']
       }, wxConfig);
       if (!isConfig) {
-        wx.config(_config);
+        wx.config(_wxConfig);
         isConfig = true;
       }
       wx.ready(() => {
         try {
           types.forEach(item => {
-            setShareInfo$1(item, info);
+            const _info = {
+              title: (config.infoMap && config.infoMap[item] && config.infoMap[item].title) || config.title,
+              desc: (config.infoMap && config.infoMap[item] && config.infoMap[item].desc) || config.desc,
+              link: (config.infoMap && config.infoMap[item] && config.infoMap[item].link) || config.link,
+              imgUrl: (config.infoMap && config.infoMap[item] && config.infoMap[item].imgUrl) || config.imgUrl
+            };
+            setShareInfo$1(item, _info);
           });
         } catch (e) {}
       });
@@ -655,7 +662,7 @@
    * @Author: backtonature 
    * @Date: 2018-05-24 14:23:11 
    * @Last Modified by: daringuo
-   * @Last Modified time: 2018-05-29 12:29:08
+   * @Last Modified time: 2018-05-31 11:53:21
    */
 
   var qqShare = (info) => {
@@ -732,7 +739,7 @@
    * @Author: backToNature 
    * @Date: 2018-05-22 17:23:35 
    * @Last Modified by: daringuo
-   * @Last Modified time: 2018-05-30 17:39:03
+   * @Last Modified time: 2018-05-31 15:24:55
    */
 
   const shareFuncMap = {
@@ -746,13 +753,16 @@
   const typesMap = ['wx', 'wxline', 'qq', 'qzone', 'sina'];
 
   const getDefaultConfig = (config) => {
+    const infoMapType = typeof config.infoMap;
     return {
       title: (config && config.title) || document.title,
       desc: (config && config.desc) || (document.querySelector('meta[name$="cription"]') && document.querySelector('meta[name$="cription"]').getAttribute('content')) || '',
       link: (config && config.link) || window.location.href,
       imgUrl: (config && config.imgUrl) || (document.querySelector('img') && document.querySelector('img').getAttribute('src')) || '',
       types: (config && Array.isArray(config.types) && config.types) || ['wx', 'wxline', 'qq', 'qzone', 'sina'],
-      wx: (config && config.wx) || null
+      wx: (config && config.wx) || null,
+      fnDoShare: config.fnDoShare,
+      infoMap: (infoMapType === 'function' || infoMapType === 'object' && !!config.infoMap) ? config.infoMap : {}
     };
   };
 
@@ -760,13 +770,7 @@
     wxConfig(config) {
       const _config = getDefaultConfig(config);
       if (util.ua.isFromWx && _config.wx && _config.wx.appId && _config.wx.timestamp && _config.wx.nonceStr && _config.wx.signature) {
-        const info = {
-          title: _config.title,
-          desc: _config.desc,
-          link: _config.link,
-          imgUrl: _config.imgUrl
-        };
-        setWxShareInfo(typesMap, _config.wx, info);
+        setWxShareInfo(typesMap, _config);
       }
     },
     init(config) {
@@ -798,12 +802,14 @@
         const target = e.target;
         typesMap.forEach(item => {
           if (target.classList.contains(`m-share-${item}`)) {
-            this.to(item, {
-              title: _config.title,
-              desc: _config.desc,
-              link: _config.link,
-              imgUrl: _config.imgUrl
-            });
+            const shareData = {
+              title: (_config.infoMap && _config.infoMap[item] && _config.infoMap[item].title) || _config.title,
+              desc: (_config.infoMap && _config.infoMap[item] && _config.infoMap[item].desc) || _config.desc,
+              link: (_config.infoMap && _config.infoMap[item] && _config.infoMap[item].link) || _config.link,
+              imgUrl: (_config.infoMap && _config.infoMap[item] && _config.infoMap[item].imgUrl) || _config.imgUrl,
+              fnDoShare: _config.fnDoShare
+            };
+            this.to(item, shareData);
           }
         });
       });
@@ -813,6 +819,9 @@
       const _config = getDefaultConfig(config);
       init(_config);
       if (typesMap.indexOf(type) >= 0) {
+        if (_config.fnDoShare) {
+          _config.fnDoShare(type);
+        }
         shareFuncMap[type](_config);
       }
     },
@@ -845,12 +854,14 @@
         typesMap.forEach(item => {
           if (target.classList.contains(`m-share-${item}`)) {
             ui.hideActionSheet();
-            this.to(item, {
-              title: _config.title,
-              desc: _config.desc,
-              link: _config.link,
-              imgUrl: _config.imgUrl
-            });
+            const shareData = {
+              title: (_config.infoMap && _config.infoMap[item] && _config.infoMap[item].title) || _config.title,
+              desc: (_config.infoMap && _config.infoMap[item] && _config.infoMap[item].desc) || _config.desc,
+              link: (_config.infoMap && _config.infoMap[item] && _config.infoMap[item].link) || _config.link,
+              imgUrl: (_config.infoMap && _config.infoMap[item] && _config.infoMap[item].imgUrl) || _config.imgUrl,
+              fnDoShare: _config.fnDoShare
+            };
+            this.to(item, shareData);
           }
         });
       });

@@ -2,7 +2,7 @@
  * @Author: backToNature 
  * @Date: 2018-05-22 17:23:35 
  * @Last Modified by: daringuo
- * @Last Modified time: 2018-05-30 17:39:03
+ * @Last Modified time: 2018-05-31 15:24:55
  */
 import util from './util.js';
 import ui from './ui.js';
@@ -25,13 +25,16 @@ const shareFuncMap = {
 const typesMap = ['wx', 'wxline', 'qq', 'qzone', 'sina'];
 
 const getDefaultConfig = (config) => {
+  const infoMapType = typeof config.infoMap;
   return {
     title: (config && config.title) || document.title,
     desc: (config && config.desc) || (document.querySelector('meta[name$="cription"]') && document.querySelector('meta[name$="cription"]').getAttribute('content')) || '',
     link: (config && config.link) || window.location.href,
     imgUrl: (config && config.imgUrl) || (document.querySelector('img') && document.querySelector('img').getAttribute('src')) || '',
     types: (config && Array.isArray(config.types) && config.types) || ['wx', 'wxline', 'qq', 'qzone', 'sina'],
-    wx: (config && config.wx) || null
+    wx: (config && config.wx) || null,
+    fnDoShare: config.fnDoShare,
+    infoMap: (infoMapType === 'function' || infoMapType === 'object' && !!config.infoMap) ? config.infoMap : {}
   };
 };
 
@@ -39,13 +42,7 @@ export default {
   wxConfig(config) {
     const _config = getDefaultConfig(config);
     if (util.ua.isFromWx && _config.wx && _config.wx.appId && _config.wx.timestamp && _config.wx.nonceStr && _config.wx.signature) {
-      const info = {
-        title: _config.title,
-        desc: _config.desc,
-        link: _config.link,
-        imgUrl: _config.imgUrl
-      };
-      setWxShareInfo(typesMap, _config.wx, info);
+      setWxShareInfo(typesMap, _config);
     }
   },
   init(config) {
@@ -77,12 +74,14 @@ export default {
       const target = e.target;
       typesMap.forEach(item => {
         if (target.classList.contains(`m-share-${item}`)) {
-          this.to(item, {
-            title: _config.title,
-            desc: _config.desc,
-            link: _config.link,
-            imgUrl: _config.imgUrl
-          });
+          const shareData = {
+            title: (_config.infoMap && _config.infoMap[item] && _config.infoMap[item].title) || _config.title,
+            desc: (_config.infoMap && _config.infoMap[item] && _config.infoMap[item].desc) || _config.desc,
+            link: (_config.infoMap && _config.infoMap[item] && _config.infoMap[item].link) || _config.link,
+            imgUrl: (_config.infoMap && _config.infoMap[item] && _config.infoMap[item].imgUrl) || _config.imgUrl,
+            fnDoShare: _config.fnDoShare
+          };
+          this.to(item, shareData);
         }
       });
     });
@@ -92,6 +91,9 @@ export default {
     const _config = getDefaultConfig(config);
     init(_config);
     if (typesMap.indexOf(type) >= 0) {
+      if (_config.fnDoShare) {
+        _config.fnDoShare(type);
+      }
       shareFuncMap[type](_config);
     }
   },
@@ -124,12 +126,14 @@ export default {
       typesMap.forEach(item => {
         if (target.classList.contains(`m-share-${item}`)) {
           ui.hideActionSheet();
-          this.to(item, {
-            title: _config.title,
-            desc: _config.desc,
-            link: _config.link,
-            imgUrl: _config.imgUrl
-          });
+          const shareData = {
+            title: (_config.infoMap && _config.infoMap[item] && _config.infoMap[item].title) || _config.title,
+            desc: (_config.infoMap && _config.infoMap[item] && _config.infoMap[item].desc) || _config.desc,
+            link: (_config.infoMap && _config.infoMap[item] && _config.infoMap[item].link) || _config.link,
+            imgUrl: (_config.infoMap && _config.infoMap[item] && _config.infoMap[item].imgUrl) || _config.imgUrl,
+            fnDoShare: _config.fnDoShare
+          };
+          this.to(item, shareData);
         }
       });
     });

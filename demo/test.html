@@ -41,11 +41,16 @@
             // imgUrl: 'http://d.hiphotos.baidu.com/image/pic/item/9345d688d43f8794f7940c9ede1b0ef41bd53a12.jpg',
             imgUrl: 'http://mat1.gtimg.com/www/qq2018/imgs/qq_logo_2018x2.png', // 图片, 默认取网页中第一个img标签
             types: ['wx', 'wxline', 'qq', 'qzone', 'sina'], // 开启的分享图标, 默认为全部
-            wx: { // 如果需要配置微信客户端分享的内容，需要填入如下参数
-                appId: '', // 公众号的唯一标识
-                timestamp: '', // 生成签名的时间戳
-                nonceStr: '', // 生成签名的随机串
-                signature: '', // 签名
+            infoMap: {
+                qzone: {
+                    title: '微信分享',
+                    desc: '我是微信的分享',
+                    link: 'http://www.qq.com?ADTAG=wx',
+                    imgUrl: 'http://mat1.gtimg.com/www/qq2018/imgs/qq_logo_2018x2.png'
+                }
+            },
+            fnDoShare(type) {
+                console.log(1);
             }
         };
         Mshare.init(config);
