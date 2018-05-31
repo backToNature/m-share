@@ -733,7 +733,7 @@ var sinaShare = (info) => {
  * @Author: backToNature 
  * @Date: 2018-05-22 17:23:35 
  * @Last Modified by: daringuo
- * @Last Modified time: 2018-05-31 15:24:55
+ * @Last Modified time: 2018-05-31 17:16:09
  */
 
 const shareFuncMap = {
@@ -751,7 +751,7 @@ const getDefaultConfig = (config) => {
   return {
     title: (config && config.title) || document.title,
     desc: (config && config.desc) || (document.querySelector('meta[name$="cription"]') && document.querySelector('meta[name$="cription"]').getAttribute('content')) || '',
-    link: (config && config.link) || window.location.href,
+    link: encodeURI((config && config.link) || window.location.href),
     imgUrl: (config && config.imgUrl) || (document.querySelector('img') && document.querySelector('img').getAttribute('src')) || '',
     types: (config && Array.isArray(config.types) && config.types) || ['wx', 'wxline', 'qq', 'qzone', 'sina'],
     wx: (config && config.wx) || null,
