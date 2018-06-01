@@ -1,10 +1,10 @@
 # m-share
 
-h5页面分享组件、支持分享到微信、朋友圈、qq、QQ空间、QQ好友。
+h5页面分享组件、支持分享到微信、朋友圈、qq、QQ空间、QQ好友。
 
 
+![](http://backtonature.github.io/project/m-share/demo1.png)
 
-移动端分享组件，一键分享微博、QQ空间、QQ好友、微信
 
  \- |微信客户端 | 手q | qq浏览器 | uc浏览器 | 其他浏览器
  -- | -- | -- | --| -- | --
@@ -13,6 +13,7 @@ h5页面分享组件、支持分享到微信、朋友圈、qq、QQ空间、QQ�
  分享到qq | 提示点击右上角分享 | 提示点击右上角分享 | native分享 | - | 弹层提示
  分享到qq空间 | 提示点击右上角分享 | 提示点击右上角分享 | native分享 | web分享 | web分享
  分享到新浪微博 | web分享 | web分享 | web分享 | web分享 | web分享
+
 
 
 ## 安装
@@ -77,3 +78,9 @@ h5页面分享组件、支持分享到微信、朋友圈、qq、QQ空间、QQ�
 	  // Mshare.render('.myClass', config); // 传入selector
 	  Mshare.render(document.querySelector('.myClass', config));
 	</script>
+
+
+## 具体逻辑
+
+从不同客户端打开
+

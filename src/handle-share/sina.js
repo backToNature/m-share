@@ -2,7 +2,7 @@
  * @Author: backtonature 
  * @Date: 2018-05-24 14:23:11 
  * @Last Modified by: daringuo
- * @Last Modified time: 2018-05-29 12:29:51
+ * @Last Modified time: 2018-06-01 15:05:39
  */
 
 import util from '../util.js';
@@ -12,6 +12,7 @@ import ui from '../ui.js';
 export default (info) => {
   if (util.ua.isFromQQBrower) {
     // qq浏览器
+    ui.hideMask();
     qqBrowserShare('sina', info);
     return;
   }

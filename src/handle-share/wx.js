@@ -2,7 +2,7 @@
  * @Author: backtonature 
  * @Date: 2018-05-23 21:20:45 
  * @Last Modified by: daringuo
- * @Last Modified time: 2018-05-29 14:25:55
+ * @Last Modified time: 2018-06-01 15:07:06
  */
 import util from '../util.js';
 import qqBrowserShare from './handle-qqbrowser.js';
@@ -20,6 +20,7 @@ export default (info) => {
   }
   if (util.ua.isFromUC) {
     // uc浏览器
+    ui.hideMask();
     if (util.ua.isFromIos) {
       window.ucbrowser && window.ucbrowser.web_share(info.title, info.imgUrl, info.link, 'kWeixin', '', '', '');
     } else {
@@ -30,6 +31,7 @@ export default (info) => {
 
   if (util.ua.isFromQQBrower) {
     // qq浏览器
+    ui.hideMask();
     qqBrowserShare('wx', info);
     return;
   }

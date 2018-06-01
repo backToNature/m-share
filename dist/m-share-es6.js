@@ -581,7 +581,7 @@ var qqBrowserShare = (type, info) => {
  * @Author: backtonature 
  * @Date: 2018-05-23 21:20:45 
  * @Last Modified by: daringuo
- * @Last Modified time: 2018-05-29 14:25:55
+ * @Last Modified time: 2018-06-01 15:07:06
  */
 
 var wxShare = (info) => {
@@ -596,6 +596,7 @@ var wxShare = (info) => {
   }
   if (util.ua.isFromUC) {
     // uc浏览器
+    ui.hideMask();
     if (util.ua.isFromIos) {
       window.ucbrowser && window.ucbrowser.web_share(info.title, info.imgUrl, info.link, 'kWeixin', '', '', '');
     } else {
@@ -606,6 +607,7 @@ var wxShare = (info) => {
 
   if (util.ua.isFromQQBrower) {
     // qq浏览器
+    ui.hideMask();
     qqBrowserShare('wx', info);
     return;
   }
@@ -617,7 +619,7 @@ var wxShare = (info) => {
  * @Author: backtonature 
  * @Date: 2018-05-24 14:17:21 
  * @Last Modified by: daringuo
- * @Last Modified time: 2018-05-29 12:29:22
+ * @Last Modified time: 2018-06-01 15:05:57
  */
 
 var wxlineShare = (info) => {
@@ -635,6 +637,7 @@ var wxlineShare = (info) => {
 
   if (util.ua.isFromUC) {
     // uc浏览器
+    ui.hideMask();
     if (util.ua.isFromIos) {
       window.ucbrowser && window.ucbrowser.web_share(info.title, info.imgUrl, info.link, 'kWeixinFriend', '', '', '');
     } else {
@@ -645,6 +648,7 @@ var wxlineShare = (info) => {
 
   if (util.ua.isFromQQBrower) {
     // qq浏览器
+    ui.hideMask();
     qqBrowserShare('wxline', info);
     return;
   }
@@ -656,7 +660,7 @@ var wxlineShare = (info) => {
  * @Author: backtonature 
  * @Date: 2018-05-24 14:23:11 
  * @Last Modified by: daringuo
- * @Last Modified time: 2018-05-31 11:53:21
+ * @Last Modified time: 2018-06-01 15:05:25
  */
 
 var qqShare = (info) => {
@@ -674,6 +678,7 @@ var qqShare = (info) => {
 
   if (util.ua.isFromQQBrower) {
     // qq浏览器
+    ui.hideMask();
     qqBrowserShare('qq', info);
     return;
   }
@@ -685,7 +690,7 @@ var qqShare = (info) => {
  * @Author: backtonature 
  * @Date: 2018-05-24 14:23:11 
  * @Last Modified by: daringuo
- * @Last Modified time: 2018-05-29 12:29:13
+ * @Last Modified time: 2018-06-01 15:05:26
  */
 
 var qzoneShare = (info) => {
@@ -703,6 +708,7 @@ var qzoneShare = (info) => {
 
   if (util.ua.isFromQQBrower) {
     // qq浏览器
+    ui.hideMask();
     qqBrowserShare('qzone', info);
     return;
   }
@@ -714,17 +720,18 @@ var qzoneShare = (info) => {
  * @Author: backtonature 
  * @Date: 2018-05-24 14:23:11 
  * @Last Modified by: daringuo
- * @Last Modified time: 2018-05-29 12:29:51
+ * @Last Modified time: 2018-06-01 15:05:39
  */
 
 var sinaShare = (info) => {
   if (util.ua.isFromQQBrower) {
     // qq浏览器
+    ui.hideMask();
     qqBrowserShare('sina', info);
     return;
   }
 
-  const query = `url=${encodeURIComponent(info.link)}&title=${encodeURIComponent(info.title)}&desc=${encodeURIComponent(info.desc)}&pic=${encodeURIComponent(info.imgUrl)}`;
+  const query = `url=${encodeURIComponent(info.link)}&title=${encodeURIComponent(info.desc)}&desc=${encodeURIComponent(info.desc)}&pic=${encodeURIComponent(info.imgUrl)}`;
   location.href = `http://service.weibo.com/share/share.php?${query}`;
   // 都不是则弹层二维码提示分享
 };
@@ -733,7 +740,7 @@ var sinaShare = (info) => {
  * @Author: backToNature 
  * @Date: 2018-05-22 17:23:35 
  * @Last Modified by: daringuo
- * @Last Modified time: 2018-05-31 17:16:09
+ * @Last Modified time: 2018-06-01 15:00:51
  */
 
 const shareFuncMap = {
@@ -817,6 +824,7 @@ var index = {
         _config.fnDoShare(type);
       }
       shareFuncMap[type](_config);
+      // ui.hideMask();
     }
   },
   // 弹层分享
