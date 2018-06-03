@@ -1,7 +1,7 @@
 /*
- * @Author: daringuo 
+ * @Author: backToNature 
  * @Date: 2018-05-30 12:54:24 
- * @Last Modified by: daringuo
+ * @Last Modified by: backToNature
  * @Last Modified time: 2018-05-30 13:39:38
  */
 export default (info) => {

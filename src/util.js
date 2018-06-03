@@ -1,7 +1,7 @@
 /*
  * @Author: backtonature 
  * @Date: 2018-05-22 20:08:19 
- * @Last Modified by: daringuo
+ * @Last Modified by: backtonature
  * @Last Modified time: 2018-05-29 11:24:07
  */
 const userAgent = window.navigator.userAgent;

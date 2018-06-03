@@ -1,7 +1,7 @@
 /*
  * @Author: backToNature 
  * @Date: 2018-05-22 17:23:35 
- * @Last Modified by: daringuo
+ * @Last Modified by: backToNature
  * @Last Modified time: 2018-06-01 15:00:51
  */
 import util from './util.js';
@@ -25,6 +25,7 @@ const shareFuncMap = {
 const typesMap = ['wx', 'wxline', 'qq', 'qzone', 'sina'];
 
 const getDefaultConfig = (config) => {
+  config = config || {};
   const infoMapType = typeof config.infoMap;
   return {
     title: (config && config.title) || document.title,
@@ -69,6 +70,12 @@ export default {
     _config.types.forEach(item => {
       tmp += getTmpl(item);
     });
+    if (typeof dom === 'string') {
+      dom = document.querySelector(dom);
+    }
+    if (!dom) {
+      return;
+    }
     dom.innerHTML = tmp;
     dom.addEventListener('click', (e) => {
       const target = e.target;
@@ -95,7 +102,6 @@ export default {
         _config.fnDoShare(type);
       }
       shareFuncMap[type](_config);
-      // ui.hideMask();
     }
   },
   // 弹层分享

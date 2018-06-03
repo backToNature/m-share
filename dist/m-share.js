@@ -7,7 +7,7 @@
   /*
    * @Author: backtonature 
    * @Date: 2018-05-22 20:08:19 
-   * @Last Modified by: daringuo
+   * @Last Modified by: backtonature
    * @Last Modified time: 2018-05-29 11:24:07
    */
   const userAgent = window.navigator.userAgent;
@@ -281,7 +281,7 @@
   /*
    * @Author: backtonature 
    * @Date: 2018-05-27 20:08:19 
-   * @Last Modified by: daringuo
+   * @Last Modified by: backtonature
    * @Last Modified time: 2018-05-30 21:05:38
    */
 
@@ -391,9 +391,9 @@
   };
 
   /*
-   * @Author: daringuo 
+   * @Author: backToNature 
    * @Date: 2018-05-30 12:54:24 
-   * @Last Modified by: daringuo
+   * @Last Modified by: backToNature
    * @Last Modified time: 2018-05-30 13:39:38
    */
   var setNormalShareInfo = (info) => {
@@ -418,7 +418,7 @@
   /*
    * @Author: backtonature 
    * @Date: 2018-05-22 21:31:32 
-   * @Last Modified by: daringuo
+   * @Last Modified by: backToNature
    * @Last Modified time: 2018-05-23 20:05:09
    */
   const qqJsSdkUrl = '//open.mobile.qq.com/sdk/qqapi.js?_bid=152';
@@ -445,7 +445,7 @@
   /*
    * @Author: backToNature 
    * @Date: 2018-05-22 17:23:35 
-   * @Last Modified by: daringuo
+   * @Last Modified by: backToNature
    * @Last Modified time: 2018-05-30 17:39:03
    */
 
@@ -475,9 +475,9 @@
   };
 
   /*
-   * @Author: daringuo 
+   * @Author: backToNature 
    * @Date: 2018-05-22 20:12:58 
-   * @Last Modified by: daringuo
+   * @Last Modified by: backToNature
    * @Last Modified time: 2018-05-31 15:16:45
    */
   const wxJsSdkUrl = '//res.wx.qq.com/open/js/jweixin-1.2.0.js';
@@ -537,7 +537,7 @@
   /*
    * @Author: backtonature 
    * @Date: 2018-05-23 21:36:23 
-   * @Last Modified by: daringuo
+   * @Last Modified by: backtonature
    * @Last Modified time: 2018-05-29 14:05:55
    */
 
@@ -586,7 +586,7 @@
   /*
    * @Author: backtonature 
    * @Date: 2018-05-23 21:20:45 
-   * @Last Modified by: daringuo
+   * @Last Modified by: backtonature
    * @Last Modified time: 2018-06-01 15:07:06
    */
 
@@ -624,7 +624,7 @@
   /*
    * @Author: backtonature 
    * @Date: 2018-05-24 14:17:21 
-   * @Last Modified by: daringuo
+   * @Last Modified by: backtonature
    * @Last Modified time: 2018-06-01 15:05:57
    */
 
@@ -665,7 +665,7 @@
   /*
    * @Author: backtonature 
    * @Date: 2018-05-24 14:23:11 
-   * @Last Modified by: daringuo
+   * @Last Modified by: backtonature
    * @Last Modified time: 2018-06-01 15:05:25
    */
 
@@ -695,7 +695,7 @@
   /*
    * @Author: backtonature 
    * @Date: 2018-05-24 14:23:11 
-   * @Last Modified by: daringuo
+   * @Last Modified by: backtonature
    * @Last Modified time: 2018-06-01 15:05:26
    */
 
@@ -725,7 +725,7 @@
   /*
    * @Author: backtonature 
    * @Date: 2018-05-24 14:23:11 
-   * @Last Modified by: daringuo
+   * @Last Modified by: backtonature
    * @Last Modified time: 2018-06-01 15:05:39
    */
 
@@ -745,7 +745,7 @@
   /*
    * @Author: backToNature 
    * @Date: 2018-05-22 17:23:35 
-   * @Last Modified by: daringuo
+   * @Last Modified by: backToNature
    * @Last Modified time: 2018-06-01 15:00:51
    */
 
@@ -760,6 +760,7 @@
   const typesMap = ['wx', 'wxline', 'qq', 'qzone', 'sina'];
 
   const getDefaultConfig = (config) => {
+    config = config || {};
     const infoMapType = typeof config.infoMap;
     return {
       title: (config && config.title) || document.title,
@@ -804,6 +805,12 @@
       _config.types.forEach(item => {
         tmp += getTmpl(item);
       });
+      if (typeof dom === 'string') {
+        dom = document.querySelector(dom);
+      }
+      if (!dom) {
+        return;
+      }
       dom.innerHTML = tmp;
       dom.addEventListener('click', (e) => {
         const target = e.target;
@@ -830,7 +837,6 @@
           _config.fnDoShare(type);
         }
         shareFuncMap[type](_config);
-        // ui.hideMask();
       }
     },
     // 弹层分享

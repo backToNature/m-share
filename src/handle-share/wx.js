@@ -1,7 +1,7 @@
 /*
  * @Author: backtonature 
  * @Date: 2018-05-23 21:20:45 
- * @Last Modified by: daringuo
+ * @Last Modified by: backtonature
  * @Last Modified time: 2018-06-01 15:07:06
  */
 import util from '../util.js';

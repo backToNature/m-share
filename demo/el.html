@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>指定元素分享</title>
+    <script src="../dist/m-share.js"></script>
+</head>
+<body>
+    <h1>指定元素分享</h1>
+    <div id="myDom"></div>
+    <script>
+        var config = {
+            title: '我就是标题', // 标题，默认读取document.title
+            desc: '这是一个描述', // 描述, 默认读取head标签：<meta name="description" content="desc" />
+            link: 'http://www.qq.com', // 网址，默认使用window.location.href
+            imgUrl: 'http://mat1.gtimg.com/www/qq2018/imgs/qq_logo_2018x2.png', // 图片, 默认取网页中第一个img标签
+            types: ['wx', 'wxline', 'qq', 'qzone', 'sina'], // 开启的分享图标, 默认为全部
+            infoMap: {
+                wx: {
+                    title: '微信分享',
+                    desc: '我是微信的分享',
+                    link: 'http://www.qq.com?ADTAG=wx',
+                    imgUrl: 'http://mat1.gtimg.com/www/qq2018/imgs/qq_logo_2018x2.png'
+                }
+            },
+            fnDoShare(type) {
+                console.log(1);
+            }
+        };
+        Mshare.render('#myDom', config);
+    </script>
+</body>
+</html>

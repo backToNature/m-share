@@ -10,22 +10,25 @@
         div {
             margin: 30px;
         }
+        .actionSheet {
+            background: palevioletred;
+            color: #fff;
+            width: 120px;
+        }
     </style>
+    <script src="../dist/m-share.js"></script>
 </head>
 <body>
     <!-- 基础配置 -->
     <h1>基础配置</h1>
 	<div class="m-share"></div>
-    <script src="../dist/m-share.js"></script>
-    <!-- 通过data-修改配置 -->
-    <h1>通过data-${param}修改配置</h1>
-    <div class="m-share" data-title="我是修改过的配置" data-types="wx,qq"></div>
-    <!-- 指定dom渲染 -->
-    <h1>指定dom渲染</h1>
-    <div class="myClass"></div>
     <!-- 弹层分享 -->
     <h1>弹层分享</h1>
     <button class="actionSheet">点击弹层</button>
+    <!-- 指定dom渲染 -->
+    <h1>指定dom渲染</h1>
+    <div class="myClass"></div>
+    
     <!-- js调用 -->
     <h1>js调用分享</h1>
     <button class="shareWx">分享到微信</button>
@@ -38,7 +41,6 @@
             title: '我就是标题', // 标题，默认读取document.title
             desc: '这是一个描述', // 描述, 默认读取head标签：<meta name="description" content="desc" />
             link: 'http://www.qq.com', // 网址，默认使用window.location.href
-            // imgUrl: 'http://d.hiphotos.baidu.com/image/pic/item/9345d688d43f8794f7940c9ede1b0ef41bd53a12.jpg',
             imgUrl: 'http://mat1.gtimg.com/www/qq2018/imgs/qq_logo_2018x2.png', // 图片, 默认取网页中第一个img标签
             types: ['wx', 'wxline', 'qq', 'qzone', 'sina'], // 开启的分享图标, 默认为全部
             infoMap: {
@@ -53,9 +55,13 @@
                 console.log(1);
             }
         };
+        // 基础配置
         Mshare.init(config);
+
+        // 指定dom渲染
         Mshare.render(document.querySelector('.myClass'), config);
 
+        // js调用分享
         document.querySelector('.shareWx').addEventListener('click', () => {
             Mshare.to('wx', config);
         });

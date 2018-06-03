@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js调用分享</title>
+    <style>
+        
+    </style>
+    <script src="../dist/m-share.js"></script>
+</head>
+<body>
+    <button style="background: #7bc549;color: #fff;" id="wx">分享到微信</button>
+    <button style="background: #fdbe3d;color: #fff;" id="qzone">分享到QQ空间</button>
+    <script>
+        var config = {
+            title: '我就是标题', // 标题，默认读取document.title
+            desc: '这是一个描述', // 描述, 默认读取head标签：<meta name="description" content="desc" />
+            link: 'http://www.qq.com', // 网址，默认使用window.location.href
+            imgUrl: 'http://mat1.gtimg.com/www/qq2018/imgs/qq_logo_2018x2.png', // 图片, 默认取网页中第一个img标签
+            fnDoShare(type) {
+                console.log(1);
+            }
+        };
+        document.querySelector('#wx').addEventListener('click', () => {
+            Mshare.to('wx', config);
+        });
+        document.querySelector('#qzone').addEventListener('click', () => {
+            Mshare.to('qzone', config);
+        });
+    </script>
+</body>
+</html>
