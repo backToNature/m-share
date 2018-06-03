@@ -41,24 +41,24 @@ h5页面分享组件、支持分享到微信、朋友圈、qq、QQ空间、QQ好
 
 ### 配置项
 	
-	const config = {
-		link:  'http://www.qq.com', // 网址，默认使用window.location.href
-		title: '标题',  // 标题，默认读取document.title 
-		desc:  '分享描述', // 描述, 默认读取<meta name="description" content="desc" />
-		imgUrl: 'http://backtonature.github.io/project/m-share/demo1.png' // 图片, 默认取网页中第一个img标签
-		types: ['wx', 'wxline', 'qq', 'qzone', 'sina'], // 启用的社交分享,默认为全部启用
-		infoMap: { // 针对不同平台设定不同分享内容
-			wx: {
-				link: '分享到微信的链接', // 覆盖分享到微信的链接
-				title: '分享到微信的标题', // 覆盖分享到微信的标题
-				desc: '分享到微信的描述', // 覆盖分享到微信的标题
-				imgUrl: '分享到微信的图片链接' // 覆盖分享到微信的图片链接
-			}
-		},
-		fnDoShare(type) {
-			// 执行分享的回调，type为'wx', 'wxline', 'qq', 'qzone', 'sina'
-		}
-	};
+    const config = {
+      link:  'http://www.qq.com', // 网址，默认使用window.location.href
+      title: '标题',  // 标题，默认读取document.title 
+      desc:  '分享描述', // 描述, 默认读取<meta name="description" content="desc" />
+      imgUrl: 'http://backtonature.github.io/project/m-share/demo1.png' // 图片, 默认取网页中第一个img标签
+      types: ['wx', 'wxline', 'qq', 'qzone', 'sina'], // 启用的社交分享,默认为全部启用
+      infoMap: { // 针对不同平台设定不同分享内容
+        wx: {
+          link: '分享到微信的链接', // 覆盖分享到微信的链接
+          title: '分享到微信的标题', // 覆盖分享到微信的标题
+          desc: '分享到微信的描述', // 覆盖分享到微信的标题
+          imgUrl: '分享到微信的图片链接' // 覆盖分享到微信的图片链接
+        }
+      },
+      fnDoShare(type) {
+        // 执行分享的回调，type为'wx', 'wxline', 'qq', 'qzone', 'sina'
+      }
+    };
 	
 ***注意：***
 
@@ -84,29 +84,29 @@ h5页面分享组件、支持分享到微信、朋友圈、qq、QQ空间、QQ好
 
 若当前页面为公众号页面，具备访问微信api的能力，可通过此方法配置微信分享。
 
-	Mshare.wxConfig({
-		title: '',
-		link: '',
-		desc: '',
-		imgUrl: '',
-		wx: {
-			appId: '', // 必填，公众号的唯一标识
-    		timestamp: , // 必填，生成签名的时间戳
-    		nonceStr: '', // 必填，生成签名的随机串
-    		signature: '' // 必填，签名
-		},
-		infoMap: ...
-	});
+    Mshare.wxConfig({
+      title: '',
+      link: '',
+      desc: '',
+      imgUrl: '',
+      wx: {
+        appId: '', // 必填，公众号的唯一标识
+        timestamp: , // 必填，生成签名的时间戳
+        nonceStr: '', // 必填，生成签名的随机串
+        signature: '' // 必填，签名
+      },
+      infoMap: ...
+    });
 
 #### render(el, config)
 
 对指定元素渲染分享icon，```el```为指定元素或者指定元素的选择器String。
 
-	<div id="myDom"></div>
-	<script>
-		Mshare.render('#myDom', config);
-		// or Mshare.render(document.querySelector('#myDom', config));
-	</script>
+    <div id="myDom"></div>
+    <script>
+      Mshare.render('#myDom', config);
+      // or Mshare.render(document.querySelector('#myDom', config));
+    </script>
 	
 [demo](http://backtonature.github.io/project/m-share/demo/el.html)
 
@@ -114,12 +114,12 @@ h5页面分享组件、支持分享到微信、朋友圈、qq、QQ空间、QQ好
 
 js直接调用分享
 
-	<button id="qq"></button>
-	<script>
-		document.querySelector('#qq').addEventListener('click', () => {
-			Mshare.to('qq', config);
-		});
-	</script>
+    <button id="qq"></button>
+    <script>
+      document.querySelector('#qq').addEventListener('click', () => {
+        Mshare.to('qq', config);
+      });
+    </script>
 
 [demo](http://backtonature.github.io/project/m-share/demo/js-to.html)
 
