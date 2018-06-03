@@ -1,6 +1,6 @@
 # [m-share](http://backtonature.github.io/project/m-share)
 
-h5页面分享组件、支持分享到微信、朋友圈、qq、QQ空间、QQ好友。
+h5页面分享组件、支持分享到微信、朋友圈、新浪微博、QQ空间、QQ好友。
 
 
 [![](http://backtonature.github.io/project/m-share/demo1.png)](http://backtonature.github.io/project/m-share)
