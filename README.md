@@ -1,12 +1,17 @@
-# m-share
+# [m-share](http://backtonature.github.io/project/m-share/index.html)
 
 h5页面分享组件、支持分享到微信、朋友圈、qq、QQ空间、QQ好友。
 
 
 ![](http://backtonature.github.io/project/m-share/demo1.png)
 
-[demo](http://backtonature.github.io/project/m-share/demo/demo.html)
+点击查看[demo](http://backtonature.github.io/project/m-share/demo/demo.html)
 
+下图为：1. 分享拉窗 2. 右上角提示(微信或手q客户端) 3. 弹层提示(其他浏览器)
+
+![](http://backtonature.github.io/project/m-share/demo5.jpg)
+
+## 执行逻辑
 
  \- |微信客户端 | 手q | qq浏览器 | uc浏览器 | 其他浏览器
  -- | -- | -- | --| -- | --
@@ -36,10 +41,7 @@ h5页面分享组件、支持分享到微信、朋友圈、qq、QQ空间、QQ好
 		Mshare.init(config);
 	</script>
 
-
-## 基本使用
-
-### 配置项
+## 配置项
 	
     const config = {
       link:  'http://www.qq.com', // 网址，默认使用window.location.href
@@ -65,22 +67,20 @@ h5页面分享组件、支持分享到微信、朋友圈、qq、QQ空间、QQ好
 1. 所有的配置参数都不是必填项
 2. ```其他浏览器```并没有开放native分享的api，所以对分享到```微信```、```朋友圈```、```QQ好友```设置的```infoMap```参数，在```其他浏览器```和```手机qq客户端```下不会生效.
 
-### 方法
+## 方法
 
 
-#### init(config)
+### init(config) - [demo](http://backtonature.github.io/project/m-share/demo/basic.html)
 
 初始化化页面所有class为```m-share```的元素。
 
-[demo](http://backtonature.github.io/project/m-share/demo/basic.html)
 
-#### popup(config)
+### popup(config) - [demo](http://backtonature.github.io/project/m-share/demo/popup.html)
 
 弹出分享弹窗
 
-[demo](http://backtonature.github.io/project/m-share/demo/popup.html)
 
-#### wxConfig(config)
+### wxConfig(config)
 
 若当前页面为公众号页面，具备访问微信api的能力，可通过此方法配置微信分享。
 
@@ -98,7 +98,7 @@ h5页面分享组件、支持分享到微信、朋友圈、qq、QQ空间、QQ好
       infoMap: ...
     });
 
-#### render(el, config)
+### render(el, config) - [demo](http://backtonature.github.io/project/m-share/demo/el.html)
 
 对指定元素渲染分享icon，```el```为指定元素或者指定元素的选择器String。
 
@@ -108,9 +108,8 @@ h5页面分享组件、支持分享到微信、朋友圈、qq、QQ空间、QQ好
       // or Mshare.render(document.querySelector('#myDom', config));
     </script>
 	
-[demo](http://backtonature.github.io/project/m-share/demo/el.html)
 
-#### to(type, config)
+### to(type, config) - [demo](http://backtonature.github.io/project/m-share/demo/js-to.html)
 
 js直接调用分享
 
@@ -120,7 +119,5 @@ js直接调用分享
         Mshare.to('qq', config);
       });
     </script>
-
-[demo](http://backtonature.github.io/project/m-share/demo/js-to.html)
 
 
