@@ -1,3 +1,9 @@
 /node_modules
-package-lock.json
 .DS_Store
+*.swp
+*.pyc
+.vscode
+package-lock.json
+yarn.lock
+coverage/
+npm-debug.log

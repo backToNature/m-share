@@ -4,7 +4,7 @@ export default {
   entry: 'src/index.js',
   dest: 'dist/m-share.js',
   format: 'umd',
-  sourceMap: 'inline',
+  name: 'Mshare',
   plugins: [
     babel({
         exclude: 'node_modules/**'

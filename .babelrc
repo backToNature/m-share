@@ -1,4 +1,13 @@
 {
-    "comments": false,
-    "presets": ["env", { "modules": false , "loose": true }]
-}
+    "presets": [
+      [
+        "es2015",
+        {
+          "modules": false
+        }
+      ]
+    ],
+    "plugins": [
+      "external-helpers"
+    ]
+  }

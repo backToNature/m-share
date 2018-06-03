@@ -1,23 +1,26 @@
 {
   "name": "m-share",
   "version": "1.0.0",
-  "description": "h5分享",
+  "description": "h5页面分享组件、支持分享到微信、朋友圈、qq、QQ空间、QQ好友。",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "server": "http-server -c-1 -p 8000 ./",
-    "build-es5": "rollup -c rollup.config.js",
     "dev": "rollup src/index.js --watch --output.format umd --name \"Mshare\" --output.file dist/m-share.js",
-    "build": "npm run build:umd && npm run build:es6 && npm run build:iife",
-    "build:umd": "rollup src/index.js --output.format umd --name \"Mshare\" --output.file dist/m-share.js",
-    "build:es6": "rollup src/index.js --output.format es --name \"Mshare\" --output.file dist/m-share-es6.js",
-    "build:iife": "rollup src/index.js --output.format iife --name \"Mshare\" --output.file dist/m-share-iife.js"
+    "build": "npm run build:umd && npm run build:es6 && uglifyjs ./dist/m-share.js -o ./dist/m-share.min.js",
+    "build:umd": "rollup -c rollup.config.js",
+    "build:es6": "rollup src/index.js --output.format es --name \"Mshare\" --output.file dist/m-share-es6.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/backToNature/m-share.git"
   },
-  "author": "'guohao' <'backtonature@foxmail.com'>",
+  "keywords": [
+    "share",
+    "h5-share",
+    "m-share",
+    "social"
+  ],
+  "author": "'darkh' <'backtonature@foxmail.com'>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/backToNature/m-share/issues"
@@ -25,9 +28,11 @@
   "homepage": "https://github.com/backToNature/m-share#readme",
   "devDependencies": {
     "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.7.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-es2015": "^6.24.1",
     "http-server": "^0.11.1",
     "rollup": "^0.59.2",
-    "rollup-plugin-babel": "^3.0.4"
+    "rollup-plugin-babel": "^3.0.4",
+    "uglify-js": "^3.4.0"
   }
 }
