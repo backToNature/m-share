@@ -14,18 +14,18 @@
         var config = {
             title: 'm-share', // 标题，默认读取document.title
             desc: 'm-share的描述', // 描述, 默认读取head标签：<meta name="description" content="desc" />
-            link: 'http://backtonature.github.io/project/m-share/', // 网址，默认使用window.location.href
-            imgUrl: 'http://backtonature.github.io/project/m-share/shareIcon.jpg', // 图片, 默认取网页中第一个img标签
+            link: 'http://www.dearhaoge.com/project/m-share/', // 网址，默认使用window.location.href
+            imgUrl: 'http://www.dearhaoge.com/project/m-share/shareIcon.jpg', // 图片, 默认取网页中第一个img标签
             types: ['wx', 'wxline', 'qq', 'qzone', 'sina'], // 开启的分享图标, 默认为全部
             infoMap: {
                 wx: {
                     title: 'm-share微信分享',
                     desc: '我是微信的分享',
-                    link: 'http://backtonature.github.io/project/m-share/?ADTAG=wx',
-                    imgUrl: 'http://backtonature.github.io/project/m-share/shareIcon.jpg'
+                    link: 'http://www.dearhaoge.com/project/m-share/?ADTAG=wx',
+                    imgUrl: 'http://www.dearhaoge.com/project/m-share/shareIcon.jpg'
                 }
             },
-            fnDoShare(type) {
+            fnDoShare: function (type) {
                 console.log(1);
             }
         };

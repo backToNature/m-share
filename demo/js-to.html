@@ -17,16 +17,16 @@
         var config = {
             title: 'm-share', // 标题，默认读取document.title
             desc: 'm-share的描述', // 描述, 默认读取head标签：<meta name="description" content="desc" />
-            link: 'http://backtonature.github.io/project/m-share/', // 网址，默认使用window.location.href
-            imgUrl: 'http://backtonature.github.io/project/m-share/shareIcon.jpg', // 图片, 默认取网页中第一个img标签
-            fnDoShare(type) {
+            link: 'http://www.dearhaoge.com/project/m-share/', // 网址，默认使用window.location.href
+            imgUrl: 'http://www.dearhaoge.com/project/m-share/shareIcon.jpg', // 图片, 默认取网页中第一个img标签
+            fnDoShare: function (type) {
                 console.log(1);
             }
         };
-        document.querySelector('#wx').addEventListener('click', () => {
+        document.querySelector('#wx').addEventListener('click', function () {
             Mshare.to('wx', config);
         });
-        document.querySelector('#qzone').addEventListener('click', () => {
+        document.querySelector('#qzone').addEventListener('click', function () {
             Mshare.to('qzone', config);
         });
     </script>
