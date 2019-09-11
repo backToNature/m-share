@@ -22,9 +22,9 @@ export default (info) => {
     // uc浏览器
     ui.hideMask();
     if (util.ua.isFromIos) {
-      window.ucbrowser && window.ucbrowser.web_share(info.title, info.imgUrl, info.link, 'kWeixin', '', '', '');
+      window.ucbrowser && window.ucbrowser.web_share(info.title, info.desc, info.link, 'kWeixin', info.imgUrl, '', '');
     } else {
-      window.ucweb && window.ucweb.startRequest("shell.page_share", [info.title, info.imgUrl, info.link, 'WechatFriends', '', '']);
+      window.ucweb && window.ucweb.startRequest("shell.page_share", [info.title, info.desc, info.link, 'WechatFriends', info.imgUrl, '']);
     }
     return;
   }

@@ -324,9 +324,9 @@
     if (util.ua.isFromUC) {
       ui.hideMask();
       if (util.ua.isFromIos) {
-        window.ucbrowser && window.ucbrowser.web_share(info.title, info.imgUrl, info.link, 'kWeixin', '', '', '');
+        window.ucbrowser && window.ucbrowser.web_share(info.title, info.desc, info.link, 'kWeixin', info.imgUrl, '', '');
       } else {
-        window.ucweb && window.ucweb.startRequest("shell.page_share", [info.title, info.imgUrl, info.link, 'WechatFriends', '', '']);
+        window.ucweb && window.ucweb.startRequest("shell.page_share", [info.title, info.desc, info.link, 'WechatFriends', info.imgUrl, '']);
       }
       return;
     }
@@ -354,9 +354,9 @@
     if (util.ua.isFromUC) {
       ui.hideMask();
       if (util.ua.isFromIos) {
-        window.ucbrowser && window.ucbrowser.web_share(info.title, info.imgUrl, info.link, 'kWeixinFriend', '', '', '');
+        window.ucbrowser && window.ucbrowser.web_share(info.title, info.desc, info.link, 'kWeixinFriend', info.imgUrl, '', '');
       } else {
-        window.ucweb && window.ucweb.startRequest("shell.page_share", [info.title, info.imgUrl, info.link, 'WechatTimeline', '', '']);
+        window.ucweb && window.ucweb.startRequest("shell.page_share", [info.title, info.desc, info.link, 'WechatTimeline', info.imgUrl, '']);
       }
       return;
     }
