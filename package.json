@@ -1,6 +1,6 @@
 {
   "name": "m-share",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "h5页面分享组件、支持分享到微信、朋友圈、qq、QQ空间、QQ好友。",
   "main": "index.js",
   "scripts": {
